@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -26,11 +27,31 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					50: '#FEF2ED',
+					100: '#FCE5DA',
+					200: '#F9CBB6',
+					300: '#F5B091',
+					400: '#F0966C',
+					500: '#E86A33', // Our primary terracotta orange
+					600: '#D14E18',
+					700: '#A33C13',
+					800: '#75290E',
+					900: '#481709',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
+					foreground: 'hsl(var(--secondary-foreground))',
+					50: '#E6F6FA',
+					100: '#CCE7F0',
+					200: '#99CDE1',
+					300: '#66B4D1',
+					400: '#339AC2',
+					500: '#37A2B8', // Our secondary teal
+					600: '#2C8193',
+					700: '#21616F',
+					800: '#16414A',
+					900: '#0B2025',
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -52,16 +73,32 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				success: {
+					DEFAULT: '#2E856E',
+					50: '#E6F5F1',
+					100: '#CCE9E2',
+					200: '#99D4C6',
+					300: '#66BEAA',
+					400: '#33A98D',
+					500: '#2E856E',
+					600: '#256A58',
+					700: '#1C5042',
+					800: '#12352C',
+					900: '#091B16',
+				},
+				warning: {
+					DEFAULT: '#F9A826',
+					50: '#FEF6E7',
+					100: '#FCEECF',
+					200: '#F9DC9F',
+					300: '#F9CB6F',
+					400: '#F9A826',
+					500: '#E08C0B',
+					600: '#B37009',
+					700: '#865407',
+					800: '#593804',
+					900: '#2D1C02',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -69,27 +106,38 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+				"accordion-down": {
+					from: { height: "0" },
+					to: { height: "var(--radix-accordion-content-height)" },
 				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				}
+				"accordion-up": {
+					from: { height: "var(--radix-accordion-content-height)" },
+					to: { height: "0" },
+				},
+				"fade-in": {
+					"0%": { opacity: "0", transform: "translateY(10px)" },
+					"100%": { opacity: "1", transform: "translateY(0)" },
+				},
+				"fade-out": {
+					"0%": { opacity: "1", transform: "translateY(0)" },
+					"100%": { opacity: "0", transform: "translateY(10px)" },
+				},
+				"scale-in": {
+					"0%": { transform: "scale(0.95)", opacity: "0" },
+					"100%": { transform: "scale(1)", opacity: "1" },
+				},
 			},
 			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				"accordion-down": "accordion-down 0.2s ease-out",
+				"accordion-up": "accordion-up 0.2s ease-out",
+				"fade-in": "fade-in 0.3s ease-out",
+				"fade-out": "fade-out 0.3s ease-out",
+				"scale-in": "scale-in 0.2s ease-out",
+			},
+			fontFamily: {
+				sans: ["Inter", "sans-serif"],
+				heading: ["Poppins", "sans-serif"],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
