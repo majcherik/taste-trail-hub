@@ -43,6 +43,7 @@ export const Navbar = () => {
                 <Link to="/events" className="text-lg font-medium hover:text-primary">Events</Link>
                 <Link to="/groups" className="text-lg font-medium hover:text-primary">Groups</Link>
                 <Link to="/bloggers" className="text-lg font-medium hover:text-primary">Food Bloggers</Link>
+                <Link to="/about" className="text-lg font-medium hover:text-primary">About</Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -61,6 +62,7 @@ export const Navbar = () => {
           <Link to="/groups" className="text-sm font-medium hover:text-primary">Groups</Link>
           <Link to="/bloggers" className="text-sm font-medium hover:text-primary">Food Bloggers</Link>
           <Link to="/feed" className="text-sm font-medium hover:text-primary">Feed</Link>
+          <Link to="/about" className="text-sm font-medium hover:text-primary">About</Link>
         </nav>
 
         <div className="flex items-center gap-2">

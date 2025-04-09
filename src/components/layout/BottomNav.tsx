@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Calendar, Users, User } from "lucide-react";
+import { Home, Search, Calendar, Users, User, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const BottomNav = () => {
@@ -11,7 +11,7 @@ export const BottomNav = () => {
     { name: "Discover", path: "/discover", icon: Search },
     { name: "Events", path: "/events", icon: Calendar },
     { name: "Groups", path: "/groups", icon: Users },
-    { name: "Profile", path: "/profile", icon: User },
+    { name: "About", path: "/about", icon: Info },
   ];
 
   return (
