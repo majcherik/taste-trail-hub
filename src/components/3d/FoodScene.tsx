@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, PresentationControls, useGLTF } from '@react-three/drei';
+import { OrbitControls, Float, PresentationControls } from '@react-three/drei';
 import { Group } from 'three';
 
 const FoodObject = () => {

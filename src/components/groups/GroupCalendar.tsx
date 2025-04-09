@@ -99,8 +99,17 @@ export const GroupCalendar: React.FC<GroupCalendarProps> = ({
             modifiersClassNames={{
               selected: "bg-primary text-primary-foreground",
             }}
-            modifiersFn={{
-              hasEvent: getDayClassName
+            modifiers={{
+              hasEvent: (date) => 
+                events.some(
+                  event => 
+                    event.date.getDate() === date.getDate() &&
+                    event.date.getMonth() === date.getMonth() &&
+                    event.date.getFullYear() === date.getFullYear()
+                )
+            }}
+            modifiersStyles={{
+              hasEvent: { backgroundColor: 'rgba(var(--primary), 0.2)', borderRadius: '100%', fontWeight: '500' }
             }}
           />
         ) : (
