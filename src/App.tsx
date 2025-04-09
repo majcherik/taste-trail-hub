@@ -27,6 +27,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/groups/:id" element={<Group />} />
+          <Route path="/events" element={<Feed />} /> {/* Temporarily pointing to Feed until Events page is created */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

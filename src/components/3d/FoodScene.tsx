@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Float, PresentationControls } from '@react-three/drei';
@@ -59,7 +58,7 @@ const FoodObject = () => {
   );
 };
 
-export const FoodScene: React.FC = () => {
+const FoodScene = () => {
   return (
     <div className="w-full h-[400px] md:h-[500px]">
       <Canvas camera={{ position: [0, 2, 5], fov: 45 }}>
@@ -85,3 +84,5 @@ export const FoodScene: React.FC = () => {
     </div>
   );
 };
+
+export default FoodScene;

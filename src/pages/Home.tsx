@@ -15,19 +15,26 @@ import {
   ChevronRight,
   Star 
 } from "lucide-react";
-import { FoodScene } from "@/components/3d/FoodScene";
+import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from "@/components/ui/carousel";
 
 const Home = () => {
   const [isVisible, setIsVisible] = useState({
     hero: false,
     search: false,
     features: false,
-    animation: false
+    showcase: false
   });
   
   const heroRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const showcaseRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -48,7 +55,9 @@ const Home = () => {
           } else if (entry.target === searchRef.current && entry.isIntersecting) {
             setIsVisible(prev => ({ ...prev, search: true }));
           } else if (entry.target === featuresRef.current && entry.isIntersecting) {
-            setIsVisible(prev => ({ ...prev, features: true, animation: true }));
+            setIsVisible(prev => ({ ...prev, features: true }));
+          } else if (entry.target === showcaseRef.current && entry.isIntersecting) {
+            setIsVisible(prev => ({ ...prev, showcase: true }));
           }
         });
       },
@@ -58,6 +67,7 @@ const Home = () => {
     if (heroRef.current) observer.observe(heroRef.current);
     if (searchRef.current) observer.observe(searchRef.current);
     if (featuresRef.current) observer.observe(featuresRef.current);
+    if (showcaseRef.current) observer.observe(showcaseRef.current);
     
     return () => observer.disconnect();
   }, []);
@@ -121,16 +131,6 @@ const Home = () => {
                   <Link to="/discover">Find Restaurants</Link>
                 </Button>
               </div>
-            </motion.div>
-
-            {/* Interactive 3D Food Scene */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 1 }}
-              className="mt-8"
-            >
-              <FoodScene />
             </motion.div>
             
             {/* Scroll indicator */}
@@ -230,7 +230,7 @@ const Home = () => {
                 <motion.div 
                   className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-primary/10"
                   animate={{ 
-                    scale: isVisible.animation ? [1, 1.1, 1] : 1
+                    scale: isVisible.features ? [1, 1.1, 1] : 1
                   }}
                   transition={{ 
                     repeat: Infinity,
@@ -254,7 +254,7 @@ const Home = () => {
                 <motion.div 
                   className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-primary/10"
                   animate={{ 
-                    scale: isVisible.animation ? [1, 1.1, 1] : 1
+                    scale: isVisible.features ? [1, 1.1, 1] : 1
                   }}
                   transition={{ 
                     repeat: Infinity,
@@ -278,7 +278,7 @@ const Home = () => {
                 <motion.div 
                   className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-primary/10"
                   animate={{ 
-                    scale: isVisible.animation ? [1, 1.1, 1] : 1
+                    scale: isVisible.features ? [1, 1.1, 1] : 1
                   }}
                   transition={{ 
                     repeat: Infinity,
@@ -302,7 +302,7 @@ const Home = () => {
                 <motion.div 
                   className="absolute -right-8 -top-8 w-24 h-24 rounded-full bg-primary/10"
                   animate={{ 
-                    scale: isVisible.animation ? [1, 1.1, 1] : 1
+                    scale: isVisible.features ? [1, 1.1, 1] : 1
                   }}
                   transition={{ 
                     repeat: Infinity,
@@ -329,39 +329,295 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
-      
-      {/* Interactive Stats Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-primary/5 to-secondary/5">
+
+      {/* Feature Showcase with Screenshots */}
+      <section 
+        ref={showcaseRef}
+        className="py-20 px-4 bg-gradient-to-r from-primary/5 to-secondary/5"
+      >
         <div className="container">
-          <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={isVisible.showcase ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
             <h2 className="font-heading font-bold text-3xl md:text-4xl mb-12 text-center">
-              Join Our Growing Community
+              Discover Our Features
             </h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { number: "1M+", label: "Users", icon: Users },
-                { number: "50K+", label: "Restaurants", icon: Utensils },
-                { number: "100K+", label: "Events", icon: Calendar },
-                { number: "4.8", label: "Average Rating", icon: Star },
-              ].map((stat, index) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex flex-col items-center justify-center p-6 bg-card rounded-xl border border-border shadow-sm"
-                >
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    <stat.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <div className="text-3xl font-bold">{stat.number}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* First Feature - Discovery Feed */}
+              <motion.div 
+                className="order-2 lg:order-1"
+                initial={{ opacity: 0, x: -30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <h3 className="text-2xl font-bold mb-4">Discover Delicious Food</h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Browse our curated feed of the best local dishes, recommended by foodies in your area.
+                  Filter by cuisine, dietary restrictions, or price range to find exactly what you're craving.
+                </p>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Personalized recommendations based on your preferences</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>High-quality photos of every dish</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Real reviews from local food enthusiasts</span>
+                  </li>
+                </ul>
+                <Button asChild className="rounded-full">
+                  <Link to="/feed">Try It Now</Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div 
+                className="order-1 lg:order-2 relative"
+                initial={{ opacity: 0, x: 30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                {/* Floating elements around the screenshot */}
+                <motion.div 
+                  className="absolute -top-8 -right-8 w-16 h-16 rounded-full bg-primary/30 z-10"
+                  animate={{ 
+                    y: [0, -15, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 3,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div 
+                  className="absolute -bottom-5 -left-5 w-12 h-12 rounded-full bg-secondary/30 z-10"
+                  animate={{ 
+                    x: [0, 10, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 4,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Screenshot */}
+                <div className="rounded-xl overflow-hidden shadow-2xl border border-border">
+                  <img 
+                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                    alt="Food discovery feed" 
+                    className="w-full h-auto"
+                  />
+                </div>
+              </motion.div>
+              
+              {/* Second Feature - Restaurant Discovery */}
+              <motion.div 
+                className="order-3 relative"
+                initial={{ opacity: 0, x: -30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                {/* Floating elements around the screenshot */}
+                <motion.div 
+                  className="absolute -top-8 -left-8 w-16 h-16 rounded-full bg-secondary/30 z-10"
+                  animate={{ 
+                    y: [0, -15, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 4,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div 
+                  className="absolute -bottom-5 -right-5 w-12 h-12 rounded-full bg-primary/30 z-10"
+                  animate={{ 
+                    x: [0, -10, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 3,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Screenshot */}
+                <div className="rounded-xl overflow-hidden shadow-2xl border border-border">
+                  <img 
+                    src="https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                    alt="Restaurant discovery" 
+                    className="w-full h-auto"
+                  />
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                className="order-4"
+                initial={{ opacity: 0, x: 30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <h3 className="text-2xl font-bold mb-4">Find Perfect Restaurants</h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Explore restaurants by location, cuisine type, or special features. 
+                  Get all the information you need to make the perfect dining choice.
+                </p>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Detailed restaurant profiles with menus and photos</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Filter by distance in miles or kilometers</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>See waiting times and make reservations</span>
+                  </li>
+                </ul>
+                <Button asChild className="rounded-full">
+                  <Link to="/discover">Discover Restaurants</Link>
+                </Button>
+              </motion.div>
+              
+              {/* Third Feature - Food Events */}
+              <motion.div 
+                className="order-6 lg:order-5"
+                initial={{ opacity: 0, x: -30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                <h3 className="text-2xl font-bold mb-4">Join Exciting Food Events</h3>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Never miss a food festival, cooking class, or tasting event again. 
+                  Our calendar keeps you updated on all the food happenings in your area.
+                </p>
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Comprehensive calendar of local food events</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Get notifications for events you're interested in</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <ChevronRight className="h-4 w-4 text-primary" />
+                    </div>
+                    <span>Connect with other attendees before the event</span>
+                  </li>
+                </ul>
+                <Button asChild className="rounded-full">
+                  <Link to="/events">Browse Events</Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div 
+                className="order-5 lg:order-6 relative"
+                initial={{ opacity: 0, x: 30 }}
+                animate={isVisible.showcase ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.9 }}
+              >
+                {/* Floating elements around the screenshot */}
+                <motion.div 
+                  className="absolute -top-8 -right-8 w-16 h-16 rounded-full bg-primary/30 z-10"
+                  animate={{ 
+                    y: [0, -10, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 3,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div 
+                  className="absolute -bottom-5 -left-5 w-12 h-12 rounded-full bg-secondary/30 z-10"
+                  animate={{ 
+                    x: [0, 15, 0],
+                  }}
+                  transition={{ 
+                    repeat: Infinity,
+                    duration: 4,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Screenshot */}
+                <div className="rounded-xl overflow-hidden shadow-2xl border border-border">
+                  <img 
+                    src="https://images.unsplash.com/photo-1615887399566-826f4c44c96a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                    alt="Food events calendar" 
+                    className="w-full h-auto"
+                  />
+                </div>
+              </motion.div>
             </div>
-          </div>
+
+            {/* App screenshots carousel */}
+            <div className="mt-20">
+              <h3 className="text-2xl font-bold mb-8 text-center">Experience Our App</h3>
+              
+              <Carousel className="max-w-4xl mx-auto">
+                <CarouselContent>
+                  {[
+                    {
+                      src: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                      alt: "Restaurant page"
+                    },
+                    {
+                      src: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                      alt: "Food item details"
+                    },
+                    {
+                      src: "https://images.unsplash.com/photo-1466637574441-749b8f19452f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+                      alt: "Events page"
+                    }
+                  ].map((image, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2">
+                      <motion.div 
+                        className="p-2"
+                        whileHover={{ y: -5, scale: 1.02 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="rounded-xl overflow-hidden shadow-lg border border-border">
+                          <img src={image.src} alt={image.alt} className="w-full h-auto" />
+                        </div>
+                      </motion.div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center mt-4 gap-4">
+                  <CarouselPrevious className="static transform-none" />
+                  <CarouselNext className="static transform-none" />
+                </div>
+              </Carousel>
+            </div>
+          </motion.div>
         </div>
       </section>
       
