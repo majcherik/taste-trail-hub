@@ -7,10 +7,23 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { NotificationPanel } from "./NotificationPanel";
+import { useNotifications } from "@/hooks/use-notifications";
+import { AnimatePresence } from "framer-motion";
 
 export const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const isLoggedIn = false; // This would come from auth context in a real app
+  
+  const {
+    notifications,
+    unreadCount,
+    isOpen: notificationsOpen,
+    toggleNotifications,
+    closeNotifications,
+    markAsRead,
+    markAllAsRead
+  } = useNotifications();
 
   return (
     <header className="sticky top-0 z-30 w-full border-b bg-background/95 backdrop-blur">
@@ -47,6 +60,7 @@ export const Navbar = () => {
           <Link to="/events" className="text-sm font-medium hover:text-primary">Events</Link>
           <Link to="/groups" className="text-sm font-medium hover:text-primary">Groups</Link>
           <Link to="/bloggers" className="text-sm font-medium hover:text-primary">Food Bloggers</Link>
+          <Link to="/feed" className="text-sm font-medium hover:text-primary">Feed</Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -81,10 +95,32 @@ export const Navbar = () => {
 
           {isLoggedIn ? (
             <>
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 flex h-2 w-2 rounded-full bg-primary"></span>
-              </Button>
+              <div className="relative">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="relative"
+                  onClick={toggleNotifications}
+                >
+                  <Bell className="h-5 w-5" />
+                  {unreadCount > 0 && (
+                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </span>
+                  )}
+                </Button>
+                
+                <AnimatePresence>
+                  {notificationsOpen && (
+                    <NotificationPanel
+                      notifications={notifications}
+                      onClose={closeNotifications}
+                      onMarkAsRead={markAsRead}
+                      onMarkAllAsRead={markAllAsRead}
+                    />
+                  )}
+                </AnimatePresence>
+              </div>
               <Link to="/profile">
                 <Avatar>
                   <AvatarImage src="https://github.com/shadcn.png" alt="User" />

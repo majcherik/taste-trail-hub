@@ -1,259 +1,263 @@
 
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { Layout } from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { EventCard } from "@/components/cards/EventCard";
-import { MessageSquare, ThumbsUp, Share2, Calendar, Users, Image, Send } from "lucide-react";
+import { Users, Calendar, MessageSquare, Plus, Send } from "lucide-react";
+import { GroupCalendar } from "@/components/groups/GroupCalendar";
 
-// Mock Events
-const groupEvents = [
-  {
-    id: "1",
-    name: "Pizza Making Workshop for Group Members",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    date: "Apr 20, 2025 • 6:00 PM",
-    location: "Luigi's Pizza Kitchen",
-    category: "Workshop",
-    attendees: 12,
-  },
-  {
-    id: "2",
-    name: "Monthly Group Dinner",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    date: "Apr 25, 2025 • 7:30 PM",
-    location: "Giovanni's Italian Restaurant",
-    category: "Dinner",
-    attendees: 18,
-  },
-];
+// Mock group data
+const mockGroup = {
+  id: "italian-food-lovers",
+  name: "Italian Food Lovers",
+  description: "A community of people passionate about authentic Italian cuisine. Share recipes, restaurant recommendations, and organize meetups!",
+  memberCount: 248,
+  image: "https://images.unsplash.com/photo-1498579150354-977475b7ea0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+  isJoined: true,
+};
 
-// Mock Posts
-const groupPosts = [
-  {
-    id: "1",
-    author: {
-      name: "Emily Chen",
-      avatar: "https://i.pravatar.cc/150?img=29",
-    },
-    content: "Just tried the new Margherita pizza at Luigi's. It's the most authentic Neapolitan pizza I've had outside of Italy! The crust was perfectly charred and the tomatoes were so fresh. Has anyone else been there yet?",
-    image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
-    timestamp: "2 hours ago",
-    likes: 15,
-    comments: 7,
-  },
-  {
-    id: "2",
-    author: {
-      name: "David Wilson",
-      avatar: "https://i.pravatar.cc/150?img=51",
-    },
-    content: "I'm looking for recommendations for the best deep dish pizza in the city. I've tried Lou's and Gino's, but I feel like I'm missing out on some hidden gems. Any suggestions from fellow pizza enthusiasts?",
-    image: "",
-    timestamp: "Yesterday",
-    likes: 8,
-    comments: 12,
-  },
-];
-
-// Mock Members
-const groupMembers = Array.from({ length: 15 }, (_, i) => ({
+// Mock members data
+const mockMembers = Array(8).fill(null).map((_, i) => ({
   id: `member-${i + 1}`,
-  name: `Member ${i + 1}`,
-  avatar: `https://i.pravatar.cc/150?img=${30 + i}`,
-  role: i < 2 ? "Admin" : "Member",
-  joinedDate: "Joined Apr 2025",
+  name: `User ${i + 1}`,
+  avatar: `https://i.pravatar.cc/150?u=${i + 1}`,
+  role: i === 0 ? "Admin" : i < 3 ? "Moderator" : "Member",
 }));
 
+// Mock posts data
+const mockPosts = [
+  {
+    id: "post-1",
+    author: {
+      name: "Jane Smith",
+      avatar: "https://i.pravatar.cc/150?u=jane",
+    },
+    content: "Just discovered the most amazing tiramisu at Bella Vita! Anyone want to join me there this weekend?",
+    time: "2 hours ago",
+    likes: 15,
+    comments: 3,
+  },
+  {
+    id: "post-2",
+    author: {
+      name: "Robert Johnson",
+      avatar: "https://i.pravatar.cc/150?u=robert",
+    },
+    content: "I'm organizing a pasta-making workshop next Saturday at my restaurant. Limited spots available, let me know if you're interested!",
+    time: "5 hours ago",
+    likes: 27,
+    comments: 8,
+  },
+];
+
+// Mock events data
+const mockEvents = [
+  {
+    id: "event-1",
+    title: "Pasta Making Workshop",
+    date: new Date(2025, 3, 15, 18, 30),
+    type: "workshop" as const,
+  },
+  {
+    id: "event-2",
+    title: "Wine & Cheese Tasting",
+    date: new Date(2025, 3, 20, 19, 0),
+    type: "tasting" as const,
+  },
+  {
+    id: "event-3",
+    title: "Group Dinner at La Trattoria",
+    date: new Date(2025, 3, 25, 20, 0),
+    type: "meetup" as const,
+  },
+  {
+    id: "event-4",
+    title: "Pizza Review Tour",
+    date: new Date(2025, 4, 5, 12, 0),
+    type: "other" as const,
+  },
+];
+
 const Group = () => {
-  const [newPost, setNewPost] = useState("");
+  const { id } = useParams<{ id: string }>();
+  const [activeTab, setActiveTab] = useState("feed");
+  const [message, setMessage] = useState("");
+  
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      // In a real app, you would send this message to your backend
+      console.log("Sending message:", message);
+      setMessage("");
+    }
+  };
 
   return (
     <Layout>
-      {/* Group Header */}
-      <div 
-        className="relative -mx-6 md:-mx-12 lg:-mx-24 h-64 bg-cover bg-center mb-16"
-        style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80')" 
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90"></div>
-        
-        <div className="container relative z-10 h-full flex flex-col justify-end pb-2">
-          <div className="absolute bottom-0 transform translate-y-1/2 left-8 rounded-xl overflow-hidden border-4 border-background">
-            <Avatar className="h-24 w-24 rounded-none">
-              <AvatarImage 
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
-                alt="Pizza Lovers Club" 
+      <div className="max-w-5xl mx-auto">
+        {/* Group Header */}
+        <div className="relative rounded-xl overflow-hidden mb-8">
+          <div className="h-48 bg-gradient-to-r from-primary/30 to-secondary/30">
+            {mockGroup.image && (
+              <img 
+                src={mockGroup.image} 
+                alt={mockGroup.name} 
+                className="h-full w-full object-cover opacity-50"
               />
-              <AvatarFallback className="rounded-none">PLC</AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </div>
-
-      <div className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center ml-32 md:ml-0">
-        <div>
-          <h1 className="font-heading text-3xl font-bold">Pizza Lovers Club</h1>
-          <p className="text-muted-foreground">42 members • Public Group</p>
-        </div>
-        <Button>Join Group</Button>
-      </div>
-
-      <Tabs defaultValue="feed" className="mb-8">
-        <TabsList className="mb-6">
-          <TabsTrigger value="feed" className="flex gap-2 items-center">
-            <MessageSquare className="h-4 w-4" />
-            <span>Feed</span>
-          </TabsTrigger>
-          <TabsTrigger value="events" className="flex gap-2 items-center">
-            <Calendar className="h-4 w-4" />
-            <span>Events</span>
-          </TabsTrigger>
-          <TabsTrigger value="members" className="flex gap-2 items-center">
-            <Users className="h-4 w-4" />
-            <span>Members</span>
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Feed Tab */}
-        <TabsContent value="feed">
-          {/* Post Creator */}
-          <Card className="mb-6">
-            <CardHeader className="p-4 pb-0">
-              <div className="flex gap-3">
-                <Avatar>
-                  <AvatarImage src="https://i.pravatar.cc/150?img=33" alt="Your Profile" />
-                  <AvatarFallback>YP</AvatarFallback>
-                </Avatar>
-                <Textarea 
-                  placeholder="Share your thoughts with the group..."
-                  value={newPost}
-                  onChange={(e) => setNewPost(e.target.value)}
-                  className="flex-1 resize-none"
-                />
-              </div>
-            </CardHeader>
-            <CardFooter className="p-4 flex justify-between">
-              <div className="flex gap-2">
-                <Button variant="ghost" size="sm">
-                  <Image className="h-4 w-4 mr-2" />
-                  Photo
-                </Button>
-              </div>
-              <Button size="sm" disabled={!newPost.trim()}>
-                <Send className="h-4 w-4 mr-2" />
-                Post
-              </Button>
-            </CardFooter>
-          </Card>
-
-          {/* Posts */}
-          {groupPosts.map((post) => (
-            <Card key={post.id} className="mb-6">
-              <CardHeader className="p-4 pb-2">
-                <div className="flex justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarImage src={post.author.avatar} alt={post.author.name} />
-                      <AvatarFallback>{post.author.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="font-medium">{post.author.name}</div>
-                      <div className="text-xs text-muted-foreground">{post.timestamp}</div>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-4 pt-2">
-                <p className="mb-4">{post.content}</p>
-                {post.image && (
-                  <div className="rounded-md overflow-hidden mb-4">
-                    <img src={post.image} alt="Post" className="w-full" />
-                  </div>
-                )}
-                <div className="flex items-center gap-4 text-muted-foreground text-sm">
-                  <div className="flex items-center gap-1">
-                    <ThumbsUp className="h-4 w-4" />
-                    <span>{post.likes}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>{post.comments}</span>
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter className="p-4 pt-0 border-t">
-                <div className="flex w-full justify-between">
-                  <Button variant="ghost" size="sm">
-                    <ThumbsUp className="h-4 w-4 mr-2" />
-                    Like
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <MessageSquare className="h-4 w-4 mr-2" />
-                    Comment
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
-        </TabsContent>
-
-        {/* Events Tab */}
-        <TabsContent value="events">
-          <div className="flex justify-between mb-6">
-            <h2 className="font-heading text-2xl font-bold">Upcoming Group Events</h2>
-            <Button>
-              <Calendar className="h-4 w-4 mr-2" />
-              Create Event
-            </Button>
+            )}
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {groupEvents.map((event) => (
-              <EventCard key={event.id} {...event} />
-            ))}
-          </div>
-        </TabsContent>
-
-        {/* Members Tab */}
-        <TabsContent value="members">
-          <div className="flex justify-between mb-6">
-            <h2 className="font-heading text-2xl font-bold">Group Members</h2>
-            <div className="flex gap-2">
-              <Input 
-                placeholder="Search members..." 
-                className="max-w-xs"
-              />
-              <Button variant="outline">Invite</Button>
+          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+          
+          <div className="absolute bottom-0 left-0 p-6 w-full">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-bold mb-2">{mockGroup.name}</h1>
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <Users className="h-4 w-4 mr-1" />
+                  <span>{mockGroup.memberCount} members</span>
+                </div>
+              </div>
+              
+              <Button variant={mockGroup.isJoined ? "outline" : "default"}>
+                {mockGroup.isJoined ? "Joined" : "Join Group"}
+              </Button>
             </div>
           </div>
+        </div>
+        
+        {/* Group Description */}
+        <div className="mb-8 bg-card rounded-lg p-4 border">
+          <h2 className="text-lg font-semibold mb-2">About this group</h2>
+          <p className="text-muted-foreground">{mockGroup.description}</p>
+        </div>
+        
+        {/* Group Content Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
+          <TabsList className="grid grid-cols-3 mb-8">
+            <TabsTrigger value="feed" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <span className="hidden sm:inline">Discussion</span>
+            </TabsTrigger>
+            <TabsTrigger value="events" className="flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              <span className="hidden sm:inline">Events</span>
+            </TabsTrigger>
+            <TabsTrigger value="members" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Members</span>
+            </TabsTrigger>
+          </TabsList>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {groupMembers.map((member) => (
-              <Card key={member.id}>
-                <CardContent className="p-4 flex flex-col items-center text-center">
-                  <Avatar className="h-16 w-16 mb-3">
-                    <AvatarImage src={member.avatar} alt={member.name} />
-                    <AvatarFallback>{member.name[0]}</AvatarFallback>
+          {/* Feed/Discussion Tab */}
+          <TabsContent value="feed" className="space-y-6">
+            {/* New Post Input */}
+            <div className="flex items-start gap-4 bg-card rounded-lg p-4 border">
+              <Avatar>
+                <AvatarImage src="https://i.pravatar.cc/150?u=user" />
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <Input
+                  placeholder="Share something with the group..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="mb-3"
+                />
+                <div className="flex justify-end">
+                  <Button onClick={handleSendMessage} className="flex items-center gap-2">
+                    Post <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Posts */}
+            {mockPosts.map((post) => (
+              <div key={post.id} className="bg-card rounded-lg p-4 border">
+                <div className="flex items-center gap-3 mb-3">
+                  <Avatar>
+                    <AvatarImage src={post.author.avatar} />
+                    <AvatarFallback>{post.author.name[0]}</AvatarFallback>
                   </Avatar>
-                  <div className="font-medium">{member.name}</div>
-                  <div className="text-xs text-muted-foreground mb-1">{member.role}</div>
-                  <div className="text-xs text-muted-foreground">{member.joinedDate}</div>
-                </CardContent>
-              </Card>
+                  <div>
+                    <div className="font-medium">{post.author.name}</div>
+                    <div className="text-xs text-muted-foreground">{post.time}</div>
+                  </div>
+                </div>
+                <p className="mb-4">{post.content}</p>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <button className="flex items-center gap-1 hover:text-primary transition-colors">
+                    <span>👍</span> Like ({post.likes})
+                  </button>
+                  <button className="flex items-center gap-1 hover:text-primary transition-colors">
+                    <span>💬</span> Comment ({post.comments})
+                  </button>
+                </div>
+              </div>
             ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+          
+          {/* Events Tab */}
+          <TabsContent value="events">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <GroupCalendar events={mockEvents} groupName={mockGroup.name} />
+              
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium text-lg">Upcoming Events</h3>
+                  <Button size="sm" className="flex items-center gap-1">
+                    <Plus className="h-4 w-4" /> New Event
+                  </Button>
+                </div>
+                
+                <div className="space-y-3">
+                  {mockEvents.map((event) => (
+                    <div 
+                      key={event.id}
+                      className="p-3 border rounded-lg hover:bg-muted/50 transition-colors"
+                    >
+                      <div className="font-medium">{event.title}</div>
+                      <div className="text-sm text-muted-foreground flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {event.date.toLocaleDateString()} at {event.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+          
+          {/* Members Tab */}
+          <TabsContent value="members">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-medium text-lg">Group Members</h3>
+                <Input placeholder="Search members..." className="max-w-xs" />
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {mockMembers.map((member) => (
+                  <div 
+                    key={member.id}
+                    className="p-4 border rounded-lg flex flex-col items-center text-center hover:bg-muted/50 transition-colors"
+                  >
+                    <Avatar className="h-16 w-16 mb-2">
+                      <AvatarImage src={member.avatar} />
+                      <AvatarFallback>{member.name[0]}</AvatarFallback>
+                    </Avatar>
+                    <div className="font-medium">{member.name}</div>
+                    <div className="text-xs text-muted-foreground">{member.role}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
     </Layout>
   );
 };
