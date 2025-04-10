@@ -1,3 +1,4 @@
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -39,4 +40,19 @@
 
 .read-the-docs {
   color: #888;
+}
+
+/* Fix for Top Dishes section overlap */
+.restaurant-section {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  scroll-margin-top: 100px;
+}
+
+/* Prevent content overlap */
+.content-section {
+  position: relative;
+  z-index: 10;
+  background-color: var(--background);
+  padding: 1rem 0;
 }

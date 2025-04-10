@@ -1,4 +1,3 @@
-
 import { Layout } from "@/components/layout/Layout";
 import { LocationSelector } from "@/components/LocationSelector";
 import { RestaurantCard } from "@/components/cards/RestaurantCard";
@@ -9,8 +8,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Edit2, Settings, Users } from "lucide-react";
+import { BadgeGroup, type BadgeType } from "@/components/badges/ProfileBadge";
 
-// Mock data
 const userGroups = [
   {
     id: "1",
@@ -28,7 +27,6 @@ const userGroups = [
   },
 ];
 
-// Reusing mock data from index for events and bloggerPosts
 const events = [
   {
     id: "1",
@@ -94,149 +92,152 @@ const savedRestaurants = [
   },
 ];
 
+const userBadges: BadgeType[] = ['elite', 'creator', 'gourmet', 'patron', 'veteran'];
+
 const Profile = () => {
   return (
     <Layout>
-      {/* Profile Header */}
-      <section className="mb-8 flex flex-col md:flex-row gap-6 items-start">
-        <div className="relative">
-          <Avatar className="h-24 w-24 md:h-32 md:w-32">
-            <AvatarImage src="https://i.pravatar.cc/150?img=33" alt="Alex Johnson" />
-            <AvatarFallback>AJ</AvatarFallback>
-          </Avatar>
-          <Button 
-            size="icon" 
-            className="absolute bottom-0 right-0 rounded-full h-8 w-8"
-            variant="secondary"
-          >
-            <Edit2 className="h-4 w-4" />
-            <span className="sr-only">Edit profile</span>
-          </Button>
-        </div>
-        
-        <div className="flex-1">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between mb-2">
-            <h1 className="font-heading text-2xl sm:text-3xl font-bold">Alex Johnson</h1>
-            <div className="flex items-center gap-2">
-              <LocationSelector className="w-auto" />
-              <Button size="icon" variant="outline">
-                <Settings className="h-4 w-4" />
-                <span className="sr-only">Settings</span>
+      <section className="mb-8">
+        <div className="p-6 rounded-xl glass-panel mb-6">
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="relative">
+              <Avatar className="h-24 w-24 md:h-32 md:w-32 ring-4 ring-primary/20 ring-offset-2 ring-offset-background">
+                <AvatarImage src="https://i.pravatar.cc/150?img=33" alt="Alex Johnson" />
+                <AvatarFallback className="bg-primary/5">AJ</AvatarFallback>
+              </Avatar>
+              <Button 
+                size="icon" 
+                className="absolute bottom-0 right-0 rounded-full h-8 w-8"
+                variant="secondary"
+              >
+                <Edit2 className="h-4 w-4" />
+                <span className="sr-only">Edit profile</span>
               </Button>
             </div>
-          </div>
-          <p className="text-muted-foreground mb-3">
-            Food enthusiast exploring the best eats in New York and beyond. Always on the lookout for hidden gems!
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <div>
-              <span className="font-medium">12</span>
-              <span className="text-muted-foreground ml-1">Reviews</span>
-            </div>
-            <div>
-              <span className="font-medium">2</span>
-              <span className="text-muted-foreground ml-1">Groups</span>
-            </div>
-            <div>
-              <span className="font-medium">8</span>
-              <span className="text-muted-foreground ml-1">Events</span>
+            
+            <div className="flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between mb-2">
+                <div>
+                  <h1 className="font-heading text-2xl sm:text-3xl font-bold">Alex Johnson</h1>
+                  <BadgeGroup badges={userBadges} className="mt-1" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <LocationSelector className="w-auto" />
+                  <Button size="icon" variant="outline">
+                    <Settings className="h-4 w-4" />
+                    <span className="sr-only">Settings</span>
+                  </Button>
+                </div>
+              </div>
+              <p className="text-muted-foreground mb-3 mt-3">
+                Food enthusiast exploring the best eats in New York and beyond. Always on the lookout for hidden gems!
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <div>
+                  <span className="font-medium">12</span>
+                  <span className="text-muted-foreground ml-1">Reviews</span>
+                </div>
+                <div>
+                  <span className="font-medium">2</span>
+                  <span className="text-muted-foreground ml-1">Groups</span>
+                </div>
+                <div>
+                  <span className="font-medium">8</span>
+                  <span className="text-muted-foreground ml-1">Events</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Tabs Content */}
-      <Tabs defaultValue="groups" className="mb-8">
-        <TabsList className="mb-6">
-          <TabsTrigger value="groups" className="flex gap-2 items-center">
-            <Users className="h-4 w-4" />
-            <span>My Groups</span>
-          </TabsTrigger>
-          <TabsTrigger value="events" className="flex gap-2 items-center">
-            <Calendar className="h-4 w-4" />
-            <span>Events</span>
-          </TabsTrigger>
-          <TabsTrigger value="saved" className="flex gap-2 items-center">
-            <span>Saved Places</span>
-          </TabsTrigger>
-          <TabsTrigger value="bloggers" className="flex gap-2 items-center">
-            <span>Food Bloggers</span>
-          </TabsTrigger>
-        </TabsList>
+        <Tabs defaultValue="groups" className="mb-8">
+          <TabsList className="mb-6 bg-background/50 border p-1 backdrop-blur-sm">
+            <TabsTrigger value="groups" className="flex gap-2 items-center data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Users className="h-4 w-4" />
+              <span>My Groups</span>
+            </TabsTrigger>
+            <TabsTrigger value="events" className="flex gap-2 items-center data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Calendar className="h-4 w-4" />
+              <span>Events</span>
+            </TabsTrigger>
+            <TabsTrigger value="saved" className="flex gap-2 items-center data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <span>Saved Places</span>
+            </TabsTrigger>
+            <TabsTrigger value="bloggers" className="flex gap-2 items-center data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <span>Food Bloggers</span>
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Groups Content */}
-        <TabsContent value="groups">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {userGroups.map((group) => (
-              <Card key={group.id} className="overflow-hidden card-hover">
-                <CardContent className="p-0">
-                  <div className="flex items-center gap-4 p-4">
-                    <Avatar className="h-16 w-16 rounded-md">
-                      <AvatarImage src={group.avatar} alt={group.name} />
-                      <AvatarFallback>{group.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-heading font-bold">{group.name}</h3>
-                        {group.isPrivate && (
-                          <span className="text-xs bg-secondary text-secondary-foreground rounded-full px-2 py-0.5">
-                            Private
-                          </span>
-                        )}
+          <TabsContent value="groups">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {userGroups.map((group) => (
+                <Card key={group.id} className="overflow-hidden card-hover luxury-card">
+                  <CardContent className="p-0">
+                    <div className="flex items-center gap-4 p-4">
+                      <Avatar className="h-16 w-16 rounded-md">
+                        <AvatarImage src={group.avatar} alt={group.name} />
+                        <AvatarFallback>{group.name[0]}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-heading font-bold">{group.name}</h3>
+                          {group.isPrivate && (
+                            <span className="text-xs bg-secondary/20 text-secondary rounded-full px-2 py-0.5">
+                              Private
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {group.members} members
+                        </p>
+                        <Button size="sm" className="mt-2 bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-primary-foreground">
+                          View Group
+                        </Button>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {group.members} members
-                      </p>
-                      <Button size="sm" className="mt-2">
-                        View Group
-                      </Button>
                     </div>
-                  </div>
-                </CardContent>
+                  </CardContent>
+                </Card>
+              ))}
+              <Card className="border-dashed flex items-center justify-center h-32 luxury-card opacity-80 hover:opacity-100 transition-opacity">
+                <Button variant="ghost" className="text-lg font-heading">
+                  <Users className="mr-2 h-5 w-5" />
+                  Create New Group
+                </Button>
               </Card>
-            ))}
-            <Card className="border-dashed flex items-center justify-center h-32">
-              <Button variant="ghost">
-                <Users className="mr-2 h-5 w-5" />
-                Create New Group
-              </Button>
-            </Card>
-          </div>
-        </TabsContent>
+            </div>
+          </TabsContent>
 
-        {/* Events Content */}
-        <TabsContent value="events">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events.map((event) => (
-              <EventCard key={event.id} {...event} />
-            ))}
-            <Card className="border-dashed flex items-center justify-center h-64">
-              <Button variant="ghost">
-                <Calendar className="mr-2 h-5 w-5" />
-                Browse More Events
-              </Button>
-            </Card>
-          </div>
-        </TabsContent>
+          <TabsContent value="events">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {events.map((event) => (
+                <EventCard key={event.id} {...event} />
+              ))}
+              <Card className="border-dashed flex items-center justify-center h-64 luxury-card opacity-80 hover:opacity-100 transition-opacity">
+                <Button variant="ghost" className="text-lg font-heading">
+                  <Calendar className="mr-2 h-5 w-5" />
+                  Browse More Events
+                </Button>
+              </Card>
+            </div>
+          </TabsContent>
 
-        {/* Saved Places Content */}
-        <TabsContent value="saved">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {savedRestaurants.map((restaurant) => (
-              <RestaurantCard key={restaurant.id} {...restaurant} />
-            ))}
-          </div>
-        </TabsContent>
+          <TabsContent value="saved">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {savedRestaurants.map((restaurant) => (
+                <RestaurantCard key={restaurant.id} {...restaurant} className="luxury-card" />
+              ))}
+            </div>
+          </TabsContent>
 
-        {/* Food Bloggers Content */}
-        <TabsContent value="bloggers">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
-            {bloggerPosts.map((post) => (
-              <BloggerPostCard key={post.id} {...post} />
-            ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="bloggers">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-6">
+              {bloggerPosts.map((post) => (
+                <BloggerPostCard key={post.id} {...post} />
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </section>
     </Layout>
   );
 };

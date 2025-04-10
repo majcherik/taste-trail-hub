@@ -1,11 +1,14 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Bell, Menu, Search, X, Home, Compass, Calendar, Users, Info, User, LogIn, LogOut } from "lucide-react";
+import { 
+  Bell, Menu, Search, X, Home, Compass, Calendar, 
+  Users, Info, User, LogIn, LogOut, Facebook, Twitter, Instagram, Linkedin 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { NotificationPanel } from "./NotificationPanel";
 import { useNotifications } from "@/hooks/use-notifications";
@@ -14,7 +17,6 @@ import {
   NavigationMenu, 
   NavigationMenuContent, 
   NavigationMenuItem, 
-  NavigationMenuLink, 
   NavigationMenuList, 
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
@@ -54,9 +56,9 @@ export const Navbar = () => {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0">
-              <SheetHeader className="p-6 border-b">
-                <SheetTitle>Menu</SheetTitle>
+            <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 glass-panel">
+              <SheetHeader className="p-6 border-b border-white/10">
+                <SheetTitle className="serif-text">Menu</SheetTitle>
               </SheetHeader>
               <div className="px-6 py-4">
                 <nav className="flex flex-col gap-4">
@@ -64,7 +66,7 @@ export const Navbar = () => {
                     <SheetClose asChild key={item.name}>
                       <Link 
                         to={item.path} 
-                        className="flex items-center gap-3 py-2 text-lg font-medium hover:text-primary transition-colors"
+                        className="flex items-center gap-3 py-2 text-lg font-heading hover:text-primary transition-colors"
                       >
                         <item.icon className="h-5 w-5" />
                         {item.name}
@@ -72,7 +74,7 @@ export const Navbar = () => {
                     </SheetClose>
                   ))}
                 </nav>
-                <div className="mt-8 pt-6 border-t">
+                <div className="mt-8 pt-6 border-t border-white/10">
                   {isLoggedIn ? (
                     <div>
                       <SheetClose asChild>
@@ -96,7 +98,7 @@ export const Navbar = () => {
                     <div className="space-y-3">
                       <SheetClose asChild>
                         <Link to="/login">
-                          <Button variant="outline" size="lg" className="w-full">
+                          <Button variant="outline" size="lg" className="w-full backdrop-blur-sm bg-white/5">
                             <LogIn className="mr-2 h-4 w-4" />
                             Log In
                           </Button>
@@ -104,7 +106,7 @@ export const Navbar = () => {
                       </SheetClose>
                       <SheetClose asChild>
                         <Link to="/signup">
-                          <Button size="lg" className="w-full">
+                          <Button size="lg" className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600">
                             Sign Up
                           </Button>
                         </Link>
@@ -112,13 +114,35 @@ export const Navbar = () => {
                     </div>
                   )}
                 </div>
+                
+                {/* Social Media Links */}
+                <div className="mt-8 pt-6 border-t border-white/10">
+                  <div className="flex justify-center gap-4">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                      <Facebook className="h-5 w-5" />
+                      <span className="sr-only">Facebook</span>
+                    </Button>
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                      <Twitter className="h-5 w-5" />
+                      <span className="sr-only">Twitter</span>
+                    </Button>
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                      <Instagram className="h-5 w-5" />
+                      <span className="sr-only">Instagram</span>
+                    </Button>
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                      <Linkedin className="h-5 w-5" />
+                      <span className="sr-only">LinkedIn</span>
+                    </Button>
+                  </div>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
           
           <Link to="/" className="flex items-center gap-1">
             <span className="font-heading font-bold text-xl md:text-2xl">
-              <span className="text-primary">Food</span>Finder
+              <span className="text-gradient-primary">Food</span>Finder
             </span>
           </Link>
         </div>
@@ -127,7 +151,7 @@ export const Navbar = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-transparent data-[state=open]:bg-white/10">Explore</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
@@ -173,11 +197,11 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-2">
           {searchOpen ? (
-            <div className="flex items-center bg-background rounded-full border px-3 py-1">
+            <div className="flex items-center glass-panel rounded-full border px-3 py-1">
               <Input
                 type="search"
                 placeholder="Search restaurants, dishes..."
-                className="border-0 focus-visible:ring-0 focus-visible:ring-transparent"
+                className="border-0 focus-visible:ring-0 focus-visible:ring-transparent bg-transparent"
               />
               <Button 
                 variant="ghost" 
@@ -192,7 +216,7 @@ export const Navbar = () => {
               variant="ghost" 
               size="icon" 
               onClick={() => setSearchOpen(true)}
-              className="hidden md:flex"
+              className="hidden md:flex hover:bg-white/10"
             >
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
@@ -207,12 +231,12 @@ export const Navbar = () => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="relative"
+                  className="relative hover:bg-white/10"
                   onClick={toggleNotifications}
                 >
                   <Bell className="h-5 w-5" />
                   {unreadCount > 0 && (
-                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground animate-pulse">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -230,7 +254,7 @@ export const Navbar = () => {
                 </AnimatePresence>
               </div>
               <Link to="/profile">
-                <Avatar>
+                <Avatar className="ring-2 ring-primary/20">
                   <AvatarImage src="https://github.com/shadcn.png" alt="User" />
                   <AvatarFallback>FF</AvatarFallback>
                 </Avatar>
@@ -239,10 +263,10 @@ export const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link to="/login">
-                <Button variant="ghost" size="sm">Log in</Button>
+                <Button variant="ghost" size="sm" className="hover:bg-white/10">Log in</Button>
               </Link>
               <Link to="/signup">
-                <Button size="sm">Sign up</Button>
+                <Button size="sm" className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600">Sign up</Button>
               </Link>
             </div>
           )}
