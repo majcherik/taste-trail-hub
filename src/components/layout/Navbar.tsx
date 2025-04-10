@@ -159,17 +159,13 @@ export const Navbar = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/feed" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Feed
-                </NavigationMenuLink>
+              <Link to="/feed" className={navigationMenuTriggerStyle()}>
+                Feed
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/restaurant/123" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Featured Restaurant
-                </NavigationMenuLink>
+              <Link to="/restaurant/123" className={navigationMenuTriggerStyle()}>
+                Featured Restaurant
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
