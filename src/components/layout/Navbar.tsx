@@ -19,6 +19,7 @@ import {
   NavigationMenuItem, 
   NavigationMenuList, 
   NavigationMenuTrigger,
+  NavigationMenuLink,
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
@@ -300,3 +301,4 @@ const ListItem = ({ className, title, children, href, icon, ...props }: any) => 
     </li>
   );
 };
+
