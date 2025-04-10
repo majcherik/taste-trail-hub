@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Calendar, Users, User, Info } from "lucide-react";
+import { Home, Search, Calendar, Users, User, Info, Utensils } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const BottomNav = () => {
@@ -9,8 +9,8 @@ export const BottomNav = () => {
   const navItems = [
     { name: "Home", path: "/", icon: Home },
     { name: "Discover", path: "/discover", icon: Search },
+    { name: "Restaurants", path: "/restaurant/123", icon: Utensils },
     { name: "Events", path: "/events", icon: Calendar },
-    { name: "Groups", path: "/groups", icon: Users },
     { name: "About", path: "/about", icon: Info },
   ];
 
@@ -18,7 +18,10 @@ export const BottomNav = () => {
     <div className="md:hidden fixed bottom-0 z-30 w-full border-t bg-background/95 backdrop-blur">
       <div className="flex justify-between items-center h-16">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = 
+            location.pathname === item.path || 
+            (item.path !== "/" && location.pathname.startsWith(item.path));
+            
           return (
             <Link
               key={item.name}

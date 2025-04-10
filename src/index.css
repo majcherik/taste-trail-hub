@@ -103,6 +103,37 @@
   .gradient-primary {
     @apply bg-gradient-to-r from-primary-500 to-orange-500;
   }
+
+  /* Luxury design elements */
+  .gold-gradient {
+    @apply bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200;
+  }
+
+  .luxury-card {
+    @apply border border-amber-200/20 shadow-lg bg-gradient-to-b from-background to-amber-50/5;
+  }
+
+  .serif-text {
+    font-family: 'Playfair Display', serif;
+    @apply tracking-wide;
+  }
+  
+  .elegant-shadow {
+    @apply shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+  }
+
+  .glass-panel {
+    @apply backdrop-blur-sm bg-white/70 dark:bg-black/40 border border-white/20 dark:border-gray-800/30;
+  }
+
+  /* Animation elements */
+  .fade-in {
+    @apply animate-fade-in;
+  }
+  
+  .scale-in {
+    @apply animate-scale-in;
+  }
 }
 
 @font-face {
@@ -151,4 +182,50 @@
   font-weight: 600;
   font-display: swap;
   src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2) format('woff2');
+}
+
+/* Add Playfair Display for luxury look */
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtM.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/playfairdisplay/v30/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKeiunDXbtM.woff2) format('woff2');
+}
+
+/* New animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }

@@ -99,6 +99,24 @@ export default {
 					800: '#593804',
 					900: '#2D1C02',
 				},
+				gold: {
+					DEFAULT: '#D4AF37',
+					50: '#FCF8EB',
+					100: '#F9F1D7',
+					200: '#F3E4AF',
+					300: '#EDD687',
+					400: '#E7C85F',
+					500: '#D4AF37',
+					600: '#AD8C23',
+					700: '#82691A',
+					800: '#574611',
+					900: '#2B2309',
+				},
+				champagne: {
+					DEFAULT: '#F7E7CE',
+					light: '#FDF5EA',
+					dark: '#E8D0A9',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -126,6 +144,11 @@ export default {
 					"0%": { transform: "scale(0.95)", opacity: "0" },
 					"100%": { transform: "scale(1)", opacity: "1" },
 				},
+				"shimmer": {
+					"100%": {
+						transform: "translateX(100%)",
+					},
+				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -133,12 +156,24 @@ export default {
 				"fade-in": "fade-in 0.3s ease-out",
 				"fade-out": "fade-out 0.3s ease-out",
 				"scale-in": "scale-in 0.2s ease-out",
+				"shimmer": "shimmer 2s infinite",
 			},
 			fontFamily: {
 				sans: ["Inter", "sans-serif"],
 				heading: ["Poppins", "sans-serif"],
+				serif: ["Playfair Display", "serif"],
 			},
-		}
+			boxShadow: {
+				'luxury': '0 10px 30px -10px rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.05)',
+				'elegant': '0 20px 40px -15px rgba(0, 0, 0, 0.1)',
+				'soft': '0 5px 15px rgba(0, 0, 0, 0.05)',
+			},
+			backgroundImage: {
+				'gold-gradient': 'linear-gradient(to right, #D4AF37, #F5E1A5, #D4AF37)',
+				'silver-gradient': 'linear-gradient(to right, #C0C0C0, #E8E8E8, #C0C0C0)',
+				'marble': 'linear-gradient(to right bottom, #f5f5f5, #eee, #f5f5f5, #eee, #f5f5f5)',
+			},
+		},
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;

@@ -1,6 +1,7 @@
 
 import { Navbar } from "./Navbar";
 import { BottomNav } from "./BottomNav";
+import { Footer } from "./Footer";
 import { ReactNode } from "react";
 import { UnitToggle } from "@/components/UnitToggle";
 
@@ -26,6 +27,7 @@ export const Layout = ({
         )}
         {children}
       </main>
+      <Footer />
       {!hideBottomNav && <BottomNav />}
     </div>
   );
