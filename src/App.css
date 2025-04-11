@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #c6a96aaa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 2em #c6a96aaa);
 }
 
 @keyframes logo-spin {
@@ -73,15 +73,15 @@
 }
 
 .border-gold {
-  border-color: rgba(212, 175, 55, 0.5);
+  border-color: rgba(198, 169, 106, 0.5);
 }
 
 .text-gold {
-  color: rgb(212, 175, 55);
+  color: rgb(198, 169, 106);
 }
 
 .bg-gold {
-  background-color: rgb(212, 175, 55);
+  background-color: rgb(198, 169, 106);
 }
 
 .card-hover {

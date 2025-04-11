@@ -25,7 +25,7 @@ const highlightedDishes = [
   {
     id: "dish2",
     name: "Wagyu Beef Steak",
-    image: "https://images.unsplash.com/photo-1546833998-877b37c2e5c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80",
     restaurant: "Prime Steakhouse",
     rating: 4.8,
     reviewCount: 156,
@@ -123,6 +123,12 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto"
           >
+            <div className="mb-8 flex justify-center">
+              <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+                <span className="font-serif font-bold text-2xl">FF</span>
+              </div>
+            </div>
+            
             <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
               Discover <span className="text-gradient-primary">Delicious</span> Food Near You
             </h1>

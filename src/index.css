@@ -13,7 +13,7 @@
     --popover: 40 30% 99%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 32 30% 40%;
+    --primary: 35 40% 45%;
     --primary-foreground: 40 30% 97%;
 
     --secondary: 215 40% 25%;
@@ -22,15 +22,15 @@
     --muted: 40 20% 92%;
     --muted-foreground: 215 20% 40%;
 
-    --accent: 32 20% 90%;
+    --accent: 35 20% 90%;
     --accent-foreground: 215 25% 15%;
 
     --destructive: 0 70% 45%;
     --destructive-foreground: 40 30% 97%;
 
-    --border: 32 20% 85%;
-    --input: 32 20% 85%;
-    --ring: 32 30% 40%;
+    --border: 35 20% 85%;
+    --input: 35 20% 85%;
+    --ring: 35 30% 40%;
 
     --radius: 0.5rem;
   }
@@ -45,7 +45,7 @@
     --popover: 215 30% 15%;
     --popover-foreground: 40 20% 90%;
 
-    --primary: 32 30% 45%;
+    --primary: 35 40% 50%;
     --primary-foreground: 215 30% 12%;
 
     --secondary: 215 40% 30%;
@@ -62,7 +62,7 @@
 
     --border: 215 30% 20%;
     --input: 215 30% 20%;
-    --ring: 32 30% 45%;
+    --ring: 35 30% 50%;
   }
 }
 
@@ -188,9 +188,11 @@
 
   /* Fix for Top Dishes section overlap */
   .restaurant-section {
-    margin-top: 3rem;
-    padding-top: 1rem;
-    scroll-margin-top: 100px;
+    margin-top: 5rem;
+    padding-top: 2rem;
+    scroll-margin-top: 120px;
+    position: relative;
+    z-index: 5;
   }
 
   /* Prevent content overlap */
@@ -198,7 +200,7 @@
     position: relative;
     z-index: 10;
     background-color: var(--background);
-    padding: 1rem 0;
+    padding: 2rem 0;
   }
 }
 

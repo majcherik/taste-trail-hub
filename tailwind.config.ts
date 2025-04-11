@@ -28,16 +28,16 @@ export default {
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
-					50: '#FEF2ED',
-					100: '#FCE5DA',
-					200: '#F9CBB6',
-					300: '#F5B091',
-					400: '#F0966C',
-					500: '#E86A33', // Our primary terracotta orange
-					600: '#D14E18',
-					700: '#A33C13',
-					800: '#75290E',
-					900: '#481709',
+					50: '#FBF7F0',
+					100: '#F7EFE1',
+					200: '#EEDFC3',
+					300: '#E5CFA5',
+					400: '#DBBF87',
+					500: '#C6A96A', // Our primary khaki color
+					600: '#B39355',
+					700: '#8C7241',
+					800: '#65522F',
+					900: '#3E321C',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',

@@ -19,7 +19,8 @@ import {
   NavigationMenuItem, 
   NavigationMenuList, 
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle
+  navigationMenuTriggerStyle,
+  NavigationMenuLink
 } from "@/components/ui/navigation-menu";
 import { WeatherWidget } from "@/components/weather/WeatherWidget";
 import { cn } from "@/lib/utils";
@@ -58,8 +59,8 @@ export const Navbar = () => {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 glass-panel">
-              <SheetHeader className="p-6 border-b border-white/10">
+            <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 bg-card">
+              <SheetHeader className="p-6 border-b">
                 <SheetTitle className="serif-text">Menu</SheetTitle>
               </SheetHeader>
               <div className="px-6 py-4">
@@ -76,7 +77,7 @@ export const Navbar = () => {
                     </SheetClose>
                   ))}
                 </nav>
-                <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="mt-8 pt-6 border-t">
                   {isLoggedIn ? (
                     <div>
                       <SheetClose asChild>
@@ -100,7 +101,7 @@ export const Navbar = () => {
                     <div className="space-y-3">
                       <SheetClose asChild>
                         <Link to="/login">
-                          <Button variant="outline" size="lg" className="w-full backdrop-blur-sm bg-white/5">
+                          <Button variant="outline" size="lg" className="w-full">
                             <LogIn className="mr-2 h-4 w-4" />
                             Log In
                           </Button>
@@ -118,21 +119,21 @@ export const Navbar = () => {
                 </div>
                 
                 {/* Social Media Links */}
-                <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="mt-8 pt-6 border-t">
                   <div className="flex justify-center gap-4">
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/50">
                       <Facebook className="h-5 w-5" />
                       <span className="sr-only">Facebook</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/50">
                       <Twitter className="h-5 w-5" />
                       <span className="sr-only">Twitter</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/50">
                       <Instagram className="h-5 w-5" />
                       <span className="sr-only">Instagram</span>
                     </Button>
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-white/10">
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/50">
                       <Linkedin className="h-5 w-5" />
                       <span className="sr-only">LinkedIn</span>
                     </Button>
@@ -142,9 +143,12 @@ export const Navbar = () => {
             </SheetContent>
           </Sheet>
           
-          <Link to="/" className="flex items-center gap-1">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+              <span className="font-serif font-bold text-sm">FF</span>
+            </div>
             <span className="font-heading font-bold text-xl md:text-2xl">
-              <span className="text-gradient-primary">Food</span>Finder
+              <span className="text-primary">Food</span>Finder
             </span>
           </Link>
         </div>
@@ -153,21 +157,23 @@ export const Navbar = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent data-[state=open]:bg-white/10">Explore</NavigationMenuTrigger>
+              <NavigationMenuTrigger>Explore</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
-                    <Link
-                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-primary p-6 no-underline outline-none focus:shadow-md"
-                      to="/discover"
-                    >
-                      <div className="mt-4 mb-2 text-lg font-medium text-primary-foreground">
-                        Discover
-                      </div>
-                      <p className="text-sm leading-tight text-primary-foreground">
-                        Explore top restaurants and dishes in your area
-                      </p>
-                    </Link>
+                    <NavigationMenuLink asChild>
+                      <Link
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-primary p-6 no-underline outline-none focus:shadow-md"
+                        to="/discover"
+                      >
+                        <div className="mt-4 mb-2 text-lg font-medium text-primary-foreground">
+                          Discover
+                        </div>
+                        <p className="text-sm leading-tight text-primary-foreground">
+                          Explore top restaurants and dishes in your area
+                        </p>
+                      </Link>
+                    </NavigationMenuLink>
                   </li>
                   {navItems.map((item) => (
                     <ListItem
@@ -226,7 +232,7 @@ export const Navbar = () => {
               variant="ghost" 
               size="icon" 
               onClick={() => setSearchOpen(true)}
-              className="hidden md:flex hover:bg-white/10"
+              className="hidden md:flex hover:bg-accent/50"
             >
               <Search className="h-5 w-5" />
               <span className="sr-only">Search</span>
@@ -244,7 +250,7 @@ export const Navbar = () => {
                 <Button 
                   variant="ghost" 
                   size="icon" 
-                  className="relative hover:bg-white/10"
+                  className="relative hover:bg-accent/50"
                   onClick={toggleNotifications}
                 >
                   <Bell className="h-5 w-5" />
@@ -290,7 +296,7 @@ export const Navbar = () => {
           ) : (
             <div className="flex items-center gap-2">
               <Link to="/login">
-                <Button variant="ghost" size="sm" className="hover:bg-white/10">Log in</Button>
+                <Button variant="ghost" size="sm" className="hover:bg-accent/50">Log in</Button>
               </Link>
               <Link to="/signup">
                 <Button size="sm" className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600">Sign up</Button>
@@ -306,22 +312,24 @@ export const Navbar = () => {
 const ListItem = ({ className, title, children, href, icon, ...props }: any) => {
   return (
     <li>
-      <Link
-        to={href}
-        className={cn(
-          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-          className
-        )}
-        {...props}
-      >
-        <div className="flex items-center text-sm font-medium leading-none">
-          {icon}
-          {title}
-        </div>
-        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-          {children}
-        </p>
-      </Link>
+      <NavigationMenuLink asChild>
+        <Link
+          to={href}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="flex items-center text-sm font-medium leading-none">
+            {icon}
+            {title}
+          </div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </Link>
+      </NavigationMenuLink>
     </li>
   );
 };
