@@ -1,5 +1,3 @@
-
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Bell, Menu, Search, X, Home, Compass, Calendar, 
@@ -118,7 +116,6 @@ export const Navbar = () => {
                   )}
                 </div>
                 
-                {/* Social Media Links */}
                 <div className="mt-8 pt-6 border-t">
                   <div className="flex justify-center gap-4">
                     <Button variant="ghost" size="icon" className="rounded-full hover:bg-accent/50">
@@ -144,16 +141,12 @@ export const Navbar = () => {
           </Sheet>
           
           <Link to="/" className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-              <span className="font-serif font-bold text-sm">FF</span>
-            </div>
             <span className="font-heading font-bold text-xl md:text-2xl">
               <span className="text-primary">Food</span>Finder
             </span>
           </Link>
         </div>
 
-        {/* Desktop Navigation Menu */}
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -244,7 +237,6 @@ export const Navbar = () => {
             </Button>
           )}
 
-          {/* Weather Widget */}
           <WeatherWidget />
 
           <ThemeToggle />

@@ -1,6 +1,5 @@
-
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Search, ChevronRight } from "lucide-react";
 import { FoodBloggerCarousel } from "@/components/carousel/FoodBloggerCarousel";
 import { MealCard } from "@/components/cards/MealCard";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 // Mock data for highlighted dishes
 const highlightedDishes = [
@@ -58,10 +58,12 @@ const highlightedDishes = [
 ];
 
 const Home = () => {
+  const navigate = useNavigate();
   const heroRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState({
     hero: false,
   });
+  const [activeTab, setActiveTab] = useState("explore");
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -79,6 +81,26 @@ const Home = () => {
     
     return () => observer.disconnect();
   }, []);
+  
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    switch(value) {
+      case "feed":
+        navigate("/feed");
+        break;
+      case "restaurants":
+        navigate("/discover");
+        break;
+      case "events":
+        navigate("/events");
+        break;
+      case "groups":
+        navigate("/groups");
+        break;
+      default:
+        navigate("/");
+    }
+  };
   
   return (
     <Layout hideBottomNav>
@@ -124,9 +146,7 @@ const Home = () => {
             className="max-w-3xl mx-auto"
           >
             <div className="mb-8 flex justify-center">
-              <div className="h-20 w-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
-                <span className="font-serif font-bold text-2xl">FF</span>
-              </div>
+              
             </div>
             
             <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
@@ -175,6 +195,21 @@ const Home = () => {
             </div>
           </motion.div>
         </div>
+        
+        {/* New Tabs for Navigation */}
+        <div className="mt-8 w-full max-w-2xl">
+          <Tabs value={activeTab} onValueChange={handleTabChange}>
+            <TabsList className="w-full">
+              <TabsTrigger value="explore" className="flex-1">Explore</TabsTrigger>
+              <TabsTrigger value="feed" className="flex-1">Feed</TabsTrigger>
+              <TabsTrigger value="restaurants" className="flex-1">Restaurants</TabsTrigger>
+              <TabsTrigger value="events" className="flex-1">Events</TabsTrigger>
+              <TabsTrigger value="groups" className="flex-1">Groups</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        
+        {/* Existing content continues */}
       </section>
       
       {/* Highlighted Dishes Section */}
