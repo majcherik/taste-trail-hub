@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, Bell, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 
 export interface Notification {
   id: string;
@@ -12,8 +12,10 @@ export interface Notification {
   description: string;
   time: string;
   read: boolean;
-  type: 'system' | 'message' | 'invitation' | 'achievement' | 'update';
+  type: 'system' | 'message' | 'invitation' | 'achievement' | 'update' | 'badge' | 'event' | 'group' | 'reservation' | 'like' | 'special';
   link?: string;
+  actionUrl?: string;
+  badge?: string;
 }
 
 interface NotificationPanelProps {
@@ -64,8 +66,13 @@ export function NotificationPanel({
                 )}
               >
                 <div className="flex justify-between items-start gap-2">
-                  <div>
-                    <p className="font-medium leading-none mb-1">{notification.title}</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-medium leading-none">{notification.title}</p>
+                      {notification.badge && (
+                        <Badge variant="subtle" size="sm">{notification.badge}</Badge>
+                      )}
+                    </div>
                     <p className="text-sm text-muted-foreground">{notification.description}</p>
                     <p className="text-xs text-muted-foreground mt-2">{notification.time}</p>
                   </div>
