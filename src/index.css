@@ -1,69 +1,68 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 210 11% 15%;
+    --background: 40 30% 97%;
+    --foreground: 215 25% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 11% 15%;
+    --card: 40 30% 99%;
+    --card-foreground: 215 25% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 210 11% 15%;
+    --popover: 40 30% 99%;
+    --popover-foreground: 215 25% 15%;
 
-    --primary: 20 78% 56%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 32 30% 40%;
+    --primary-foreground: 40 30% 97%;
 
-    --secondary: 192 52% 47%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 215 40% 25%;
+    --secondary-foreground: 40 30% 97%;
 
-    --muted: 210 20% 98%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 215 20% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 210 11% 15%;
+    --accent: 32 20% 90%;
+    --accent-foreground: 215 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 40 30% 97%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 20 78% 56%;
+    --border: 32 20% 85%;
+    --input: 32 20% 85%;
+    --ring: 32 30% 40%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
   .dark {
-    --background: 210 11% 8%;
-    --foreground: 210 10% 98%;
+    --background: 215 30% 12%;
+    --foreground: 40 20% 90%;
 
-    --card: 210 11% 12%;
-    --card-foreground: 210 10% 98%;
+    --card: 215 30% 15%;
+    --card-foreground: 40 20% 90%;
 
-    --popover: 210 11% 12%;
-    --popover-foreground: 210 10% 98%;
+    --popover: 215 30% 15%;
+    --popover-foreground: 40 20% 90%;
 
-    --primary: 20 78% 56%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 32 30% 45%;
+    --primary-foreground: 215 30% 12%;
 
-    --secondary: 192 52% 47%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 215 40% 30%;
+    --secondary-foreground: 40 20% 90%;
 
-    --muted: 210 11% 15%;
-    --muted-foreground: 215 10% 65%;
+    --muted: 215 30% 20%;
+    --muted-foreground: 40 15% 65%;
 
-    --accent: 210 11% 15%;
-    --accent-foreground: 210 10% 98%;
+    --accent: 215 30% 20%;
+    --accent-foreground: 40 20% 90%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 60% 40%;
+    --destructive-foreground: 40 20% 90%;
 
-    --border: 210 11% 20%;
-    --input: 210 11% 20%;
-    --ring: 20 78% 56%;
+    --border: 215 30% 20%;
+    --input: 215 30% 20%;
+    --ring: 32 30% 45%;
   }
 }
 
@@ -101,12 +100,12 @@
   }
   
   .gradient-primary {
-    @apply bg-gradient-to-r from-primary-500 to-orange-500;
+    @apply bg-gradient-to-r from-amber-700 to-amber-500;
   }
 
   /* Luxury design elements */
   .gold-gradient {
-    @apply bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-200;
+    @apply bg-gradient-to-r from-amber-700 via-amber-600 to-amber-700;
   }
 
   .luxury-card {
@@ -123,7 +122,7 @@
   }
 
   .glass-panel {
-    @apply backdrop-blur-sm bg-white/70 dark:bg-black/40 border border-white/20 dark:border-gray-800/30;
+    @apply backdrop-blur-sm bg-background/90 dark:bg-background/80 border border-border/50 dark:border-border/30;
   }
 
   /* Animation elements */
@@ -137,11 +136,11 @@
   
   /* New luxury UI elements */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-primary-500 via-primary-600 to-primary-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-amber-800 via-amber-700 to-amber-600 bg-clip-text text-transparent;
   }
   
   .gold-text {
-    @apply bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-amber-700 via-amber-500 to-amber-700 bg-clip-text text-transparent;
   }
   
   .fancy-border {
@@ -149,25 +148,25 @@
   }
   
   .luxury-button {
-    @apply bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white shadow-md;
+    @apply bg-gradient-to-r from-amber-800 to-amber-700 hover:from-amber-900 hover:to-amber-800 text-white shadow-md;
   }
   
   .fancy-divider {
-    @apply relative h-px w-full bg-gradient-to-r from-transparent via-gold-500/30 to-transparent my-8;
+    @apply relative h-px w-full bg-gradient-to-r from-transparent via-amber-700/30 to-transparent my-8;
   }
   
   .fancy-divider:before {
     content: '';
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-8 bg-gold-500/50 rounded-full;
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-8 bg-amber-700/50 rounded-full;
   }
   
   .fancy-card {
-    @apply relative overflow-hidden rounded-lg border border-white/10 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm shadow-luxury p-6;
+    @apply relative overflow-hidden rounded-lg border border-amber-100/10 dark:border-amber-900/20 bg-gradient-to-br from-white/5 to-white/10 dark:from-amber-900/5 dark:to-amber-900/10 backdrop-blur-sm shadow-luxury p-6;
   }
   
   .fancy-card:before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent;
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-700 to-transparent;
   }
   
   /* Restaurant UI specific styles */
@@ -184,7 +183,22 @@
   }
   
   .reservation-form {
-    @apply bg-gradient-to-br from-background to-amber-50/5 backdrop-blur-sm border border-white/10 rounded-lg p-6 shadow-elegant;
+    @apply bg-gradient-to-br from-background to-amber-50/5 backdrop-blur-sm border border-amber-200/10 dark:border-amber-800/20 rounded-lg p-6 shadow-elegant;
+  }
+
+  /* Fix for Top Dishes section overlap */
+  .restaurant-section {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    scroll-margin-top: 100px;
+  }
+
+  /* Prevent content overlap */
+  .content-section {
+    position: relative;
+    z-index: 10;
+    background-color: var(--background);
+    padding: 1rem 0;
   }
 }
 

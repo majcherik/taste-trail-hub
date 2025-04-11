@@ -19,7 +19,6 @@ import {
   NavigationMenuItem, 
   NavigationMenuList, 
   NavigationMenuTrigger,
-  NavigationMenuLink,
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
 import { WeatherWidget } from "@/components/weather/WeatherWidget";
@@ -28,7 +27,7 @@ import { UserHoverCard } from "@/components/profile/UserHoverCard";
 
 export const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
-  const isLoggedIn = true; // This would come from auth context in a real app
+  const isLoggedIn = false; // Set to false for logged-out state
   
   const {
     notifications,
@@ -158,19 +157,17 @@ export const Navbar = () => {
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                   <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-primary p-6 no-underline outline-none focus:shadow-md"
-                        to="/discover"
-                      >
-                        <div className="mt-4 mb-2 text-lg font-medium text-primary-foreground">
-                          Discover
-                        </div>
-                        <p className="text-sm leading-tight text-primary-foreground">
-                          Explore top restaurants and dishes in your area
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
+                    <Link
+                      className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/50 to-primary p-6 no-underline outline-none focus:shadow-md"
+                      to="/discover"
+                    >
+                      <div className="mt-4 mb-2 text-lg font-medium text-primary-foreground">
+                        Discover
+                      </div>
+                      <p className="text-sm leading-tight text-primary-foreground">
+                        Explore top restaurants and dishes in your area
+                      </p>
+                    </Link>
                   </li>
                   {navItems.map((item) => (
                     <ListItem
@@ -193,6 +190,16 @@ export const Navbar = () => {
             <NavigationMenuItem>
               <Link to="/restaurant/123" className={navigationMenuTriggerStyle()}>
                 Featured Restaurant
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/add-restaurant" className={navigationMenuTriggerStyle()}>
+                Add Restaurant
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/create-group" className={navigationMenuTriggerStyle()}>
+                Create Group
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -299,24 +306,22 @@ export const Navbar = () => {
 const ListItem = ({ className, title, children, href, icon, ...props }: any) => {
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <Link
-          to={href}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="flex items-center text-sm font-medium leading-none">
-            {icon}
-            {title}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </Link>
-      </NavigationMenuLink>
+      <Link
+        to={href}
+        className={cn(
+          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+          className
+        )}
+        {...props}
+      >
+        <div className="flex items-center text-sm font-medium leading-none">
+          {icon}
+          {title}
+        </div>
+        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          {children}
+        </p>
+      </Link>
     </li>
   );
 };

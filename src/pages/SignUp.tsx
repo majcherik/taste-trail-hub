@@ -1,8 +1,9 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -11,154 +12,165 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { Facebook, Github, Mail, Twitter } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const SignUp = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords don't match");
-      return;
-    }
-    
-    // In a real app, this would call an API
-    console.log("Signing up with:", formData);
-    toast.success("Account created successfully! Redirecting to login...");
-    
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+    toast({
+      title: "Account created",
+      description: "We've created your account for you.",
     });
   };
 
   return (
     <Layout hideBottomNav>
-      <div className="flex items-center justify-center min-h-[80vh] py-12 px-4">
-        <Card className="w-full max-w-md glass-panel border border-white/10">
-          <CardHeader className="space-y-1 text-center">
-            <CardTitle className="text-3xl font-heading">Create an Account</CardTitle>
+      <div className="container max-w-md pt-16 pb-10">
+        <div className="mb-8 text-center">
+          <h1 className="font-heading text-3xl font-bold mb-2">Join FoodFinder</h1>
+          <p className="text-muted-foreground">
+            Create an account to discover amazing food experiences
+          </p>
+        </div>
+
+        <Card className="fancy-card">
+          <CardHeader className="pb-3">
+            <CardTitle>Create an account</CardTitle>
             <CardDescription>
-              Join our community of food enthusiasts
+              Enter your information to get started
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  name="name"
-                  placeholder="John Doe"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="glass-input"
-                />
+          <form onSubmit={handleSubmit}>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="firstName">First name</Label>
+                  <Input
+                    id="firstName"
+                    placeholder="John"
+                    className="glass-input"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="lastName">Last name</Label>
+                  <Input
+                    id="lastName"
+                    placeholder="Doe"
+                    className="glass-input"
+                    required
+                  />
+                </div>
               </div>
+              
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
-                  name="email"
                   type="email"
-                  placeholder="john@example.com"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
+                  placeholder="example@email.com"
                   className="glass-input"
+                  required
                 />
               </div>
+              
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  placeholder="johndoe"
+                  className="glass-input"
+                  required
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="#"
+                    className="text-xs text-muted-foreground hover:text-primary"
+                  >
+                    Password requirements
+                  </Link>
+                </div>
                 <Input
                   id="password"
-                  name="password"
                   type="password"
-                  required
-                  value={formData.password}
-                  onChange={handleChange}
                   className="glass-input"
+                  required
                 />
               </div>
+
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
-                  name="confirmPassword"
                   type="password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
                   className="glass-input"
+                  required
                 />
               </div>
-              <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600"
-              >
-                Sign Up
+            </CardContent>
+            <CardFooter className="flex-col gap-4">
+              <Button type="submit" className="w-full luxury-button">
+                Create Account
               </Button>
-            </form>
 
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-white/10"></span>
+              <div className="text-center">
+                <p className="text-sm text-muted-foreground">
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-primary hover:underline">
+                    Sign in
+                  </Link>
+                </p>
               </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">
-                  Or continue with
-                </span>
+              
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-white/10" />
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-card px-2 text-muted-foreground">
+                    Or continue with
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div className="flex gap-2">
-              <Button variant="outline" className="w-full glass-button">
-                <Facebook className="mr-2 h-4 w-4" />
-                Facebook
-              </Button>
-              <Button variant="outline" className="w-full glass-button">
-                <Twitter className="mr-2 h-4 w-4" />
-                Twitter
-              </Button>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <div className="text-center text-sm">
-              By signing up, you agree to our{" "}
-              <Link to="/terms-of-service" className="underline hover:text-primary">
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link to="/privacy-policy" className="underline hover:text-primary">
-                Privacy Policy
-              </Link>
-            </div>
-            <div className="text-center text-sm">
-              Already have an account?{" "}
-              <Link to="/login" className="text-primary hover:underline">
-                Log in
-              </Link>
-            </div>
-          </CardFooter>
+              <div className="grid grid-cols-3 gap-3">
+                <Button variant="outline" className="border-amber-200/30 dark:border-amber-800/30">
+                  <Facebook className="mr-2 h-4 w-4" />
+                  Facebook
+                </Button>
+                <Button variant="outline" className="border-amber-200/30 dark:border-amber-800/30">
+                  <Twitter className="mr-2 h-4 w-4" />
+                  Twitter
+                </Button>
+                <Button variant="outline" className="border-amber-200/30 dark:border-amber-800/30">
+                  <Github className="mr-2 h-4 w-4" />
+                  Github
+                </Button>
+              </div>
+            </CardFooter>
+          </form>
         </Card>
+
+        <div className="mt-6 text-center text-xs text-muted-foreground">
+          By signing up, you agree to our{" "}
+          <Link to="/terms-of-service" className="text-primary hover:underline">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link to="/privacy-policy" className="text-primary hover:underline">
+            Privacy Policy
+          </Link>
+          .
+        </div>
       </div>
     </Layout>
   );

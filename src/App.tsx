@@ -15,6 +15,9 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import SignUp from "./pages/SignUp";
+import CreateGroup from "./pages/CreateGroup";
+import AddRestaurant from "./pages/AddRestaurant";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +32,7 @@ const App = () => (
           <Route path="/feed" element={<Feed />} />
           <Route path="/discover" element={<Discover />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/groups/:id" element={<Group />} />
           <Route path="/restaurant/:id" element={<Restaurant />} />
@@ -36,6 +40,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/create-group" element={<CreateGroup />} />
+          <Route path="/add-restaurant" element={<AddRestaurant />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
