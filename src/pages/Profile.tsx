@@ -1,14 +1,34 @@
+
+import { useState } from "react";
 import { Layout } from "@/components/layout/Layout";
-import { LocationSelector } from "@/components/LocationSelector";
-import { RestaurantCard } from "@/components/cards/RestaurantCard";
-import { EventCard } from "@/components/cards/EventCard";
-import { BloggerPostCard } from "@/components/cards/BloggerPostCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, Edit2, Settings, Users } from "lucide-react";
 import { BadgeGroup, type BadgeType } from "@/components/badges/ProfileBadge";
+import { SocialMediaLinks } from "@/components/profile/SocialMediaLinks";
+import { LocationSelector } from "@/components/LocationSelector";
+import { RestaurantCard } from "@/components/cards/RestaurantCard";
+import { EventCard } from "@/components/cards/EventCard";
+import { BloggerPostCard } from "@/components/cards/BloggerPostCard";
+
+const initialSocialLinks = [
+  {
+    id: "1",
+    platform: "instagram",
+    username: "foodie_alex",
+    url: "https://instagram.com/foodie_alex",
+    icon: () => null
+  },
+  {
+    id: "2",
+    platform: "twitter",
+    username: "alexj_food",
+    url: "https://twitter.com/alexj_food",
+    icon: () => null
+  }
+];
 
 const userGroups = [
   {
@@ -95,6 +115,8 @@ const savedRestaurants = [
 const userBadges: BadgeType[] = ['elite', 'creator', 'gourmet', 'patron', 'veteran'];
 
 const Profile = () => {
+  const [socialLinks, setSocialLinks] = useState(initialSocialLinks);
+  
   return (
     <Layout>
       <section className="mb-8">
@@ -132,7 +154,11 @@ const Profile = () => {
               <p className="text-muted-foreground mb-3 mt-3">
                 Food enthusiast exploring the best eats in New York and beyond. Always on the lookout for hidden gems!
               </p>
-              <div className="flex flex-wrap gap-4">
+              
+              {/* Social Media Links */}
+              <SocialMediaLinks initialLinks={socialLinks} editable={true} />
+              
+              <div className="flex flex-wrap gap-4 mt-3">
                 <div>
                   <span className="font-medium">12</span>
                   <span className="text-muted-foreground ml-1">Reviews</span>

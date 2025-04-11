@@ -6,6 +6,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { FoodBloggerCarousel } from "@/components/carousel/FoodBloggerCarousel";
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -120,8 +121,14 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+      
+      {/* Food Blogger Carousel Section */}
+      <section className="mt-16 mb-12">
+        <FoodBloggerCarousel />
+      </section>
     </Layout>
   );
 };
 
 export default Home;
+

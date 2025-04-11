@@ -22,11 +22,13 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu";
+import { WeatherWidget } from "@/components/weather/WeatherWidget";
 import { cn } from "@/lib/utils";
+import { UserHoverCard } from "@/components/profile/UserHoverCard";
 
 export const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
-  const isLoggedIn = false; // This would come from auth context in a real app
+  const isLoggedIn = true; // This would come from auth context in a real app
   
   const {
     notifications,
@@ -224,6 +226,9 @@ export const Navbar = () => {
             </Button>
           )}
 
+          {/* Weather Widget */}
+          <WeatherWidget />
+
           <ThemeToggle />
 
           {isLoggedIn ? (
@@ -254,12 +259,26 @@ export const Navbar = () => {
                   )}
                 </AnimatePresence>
               </div>
-              <Link to="/profile">
-                <Avatar className="ring-2 ring-primary/20">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                  <AvatarFallback>FF</AvatarFallback>
-                </Avatar>
-              </Link>
+              
+              <UserHoverCard 
+                username="alex_j"
+                displayName="Alex Johnson"
+                avatar="https://i.pravatar.cc/150?img=33"
+                badges={['elite', 'creator', 'gourmet']}
+                location="New York, USA"
+                joinDate="March 2023"
+                bio="Food enthusiast exploring the best eats in New York and beyond. Always on the lookout for hidden gems!"
+                reviewCount={12}
+                groupCount={2}
+                eventCount={8}
+              >
+                <Link to="/profile">
+                  <Avatar className="ring-2 ring-primary/20">
+                    <AvatarImage src="https://i.pravatar.cc/150?img=33" alt="User" />
+                    <AvatarFallback>AJ</AvatarFallback>
+                  </Avatar>
+                </Link>
+              </UserHoverCard>
             </>
           ) : (
             <div className="flex items-center gap-2">
@@ -301,4 +320,3 @@ const ListItem = ({ className, title, children, href, icon, ...props }: any) => 
     </li>
   );
 };
-
