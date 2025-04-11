@@ -6,8 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Users, Calendar, MessageSquare, Plus, Send } from "lucide-react";
+import { Users, Calendar, MessageSquare, Plus, Send, PieChart } from "lucide-react";
 import { GroupCalendar } from "@/components/groups/GroupCalendar";
+import { PollComponent } from "@/components/groups/PollComponent";
 
 // Mock group data
 const mockGroup = {
@@ -85,6 +86,7 @@ const Group = () => {
   const { id } = useParams<{ id: string }>();
   const [activeTab, setActiveTab] = useState("feed");
   const [message, setMessage] = useState("");
+  const isGroupModerator = true; // For demo purposes, set to true to show polling features
   
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -136,7 +138,7 @@ const Group = () => {
         
         {/* Group Content Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-          <TabsList className="grid grid-cols-3 mb-8">
+          <TabsList className="grid grid-cols-4 mb-8">
             <TabsTrigger value="feed" className="flex items-center gap-2">
               <MessageSquare className="h-4 w-4" />
               <span className="hidden sm:inline">Discussion</span>
@@ -144,6 +146,10 @@ const Group = () => {
             <TabsTrigger value="events" className="flex items-center gap-2">
               <Calendar className="h-4 w-4" />
               <span className="hidden sm:inline">Events</span>
+            </TabsTrigger>
+            <TabsTrigger value="polls" className="flex items-center gap-2">
+              <PieChart className="h-4 w-4" />
+              <span className="hidden sm:inline">Polls</span>
             </TabsTrigger>
             <TabsTrigger value="members" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
@@ -229,6 +235,11 @@ const Group = () => {
                 </div>
               </div>
             </div>
+          </TabsContent>
+
+          {/* Polls Tab */}
+          <TabsContent value="polls">
+            <PollComponent isGroupModerator={isGroupModerator} />
           </TabsContent>
           
           {/* Members Tab */}
