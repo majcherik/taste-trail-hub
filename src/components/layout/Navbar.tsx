@@ -1,4 +1,6 @@
+
 import { Link } from "react-router-dom";
+import { useState } from "react"; // Adding the missing useState import
 import { 
   Bell, Menu, Search, X, Home, Compass, Calendar, 
   Users, Info, User, LogIn, LogOut, Facebook, Twitter, Instagram, Linkedin 
