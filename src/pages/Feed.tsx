@@ -1,4 +1,3 @@
-
 import { Layout } from "@/components/layout/Layout";
 import { LocationSelector } from "@/components/LocationSelector";
 import { RestaurantCard } from "@/components/cards/RestaurantCard";
@@ -10,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronRight } from "lucide-react";
 import { useDistanceUnits } from "@/hooks/use-distance-units";
+import { InfluencerRecipes } from "@/components/feed/InfluencerRecipes";
 
 // Mock data
 const restaurants = [
@@ -128,10 +128,10 @@ const Feed = () => {
   return (
     <Layout>
       {/* Hero Section with Search */}
-      <section className="bg-gradient-to-r from-primary/20 to-secondary/20 -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24 py-10 mb-8 rounded-lg">
+      <section className="bg-gradient-to-r from-secondary/20 to-primary/20 -mx-6 md:-mx-12 lg:-mx-24 px-6 md:px-12 lg:px-24 py-10 mb-8 rounded-lg">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="font-heading font-bold text-4xl md:text-5xl mb-4">
-            Discover <span className="text-primary">Delicious</span> Food Near You
+            Discover <span className="text-secondary">Delicious</span> Food Near You
           </h1>
           <p className="text-lg mb-6 text-muted-foreground">
             Find top restaurants, specific dishes, and connect with local food enthusiasts
@@ -159,6 +159,9 @@ const Feed = () => {
       <div className="flex justify-end mb-4">
         <UnitToggle />
       </div>
+
+      {/* Instagram Influencer Recipes - NEW SECTION */}
+      <InfluencerRecipes />
 
       {/* Recommended Meals Section */}
       <section className="mb-12">

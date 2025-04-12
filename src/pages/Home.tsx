@@ -4,12 +4,11 @@ import { motion } from "framer-motion";
 import { Layout } from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, ChevronRight } from "lucide-react";
+import { Search, ChevronRight, MapPin } from "lucide-react";
 import { FoodBloggerCarousel } from "@/components/carousel/FoodBloggerCarousel";
 import { MealCard } from "@/components/cards/MealCard";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
-// Mock data for highlighted dishes
 const highlightedDishes = [
   {
     id: "dish1",
@@ -64,6 +63,7 @@ const Home = () => {
     hero: false,
   });
   const [activeTab, setActiveTab] = useState("explore");
+  const [locationQuery, setLocationQuery] = useState("");
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -102,18 +102,32 @@ const Home = () => {
     }
   };
   
+  const locationSuggestions = [
+    "New York, NY",
+    "Los Angeles, CA",
+    "Chicago, IL",
+    "Houston, TX",
+    "Phoenix, AZ"
+  ];
+  
+  const filteredSuggestions = locationQuery
+    ? locationSuggestions.filter(loc => 
+        loc.toLowerCase().includes(locationQuery.toLowerCase())
+      )
+    : [];
+  
   return (
     <Layout hideBottomNav>
-      {/* Hero Section with Search */}
       <section 
         ref={heroRef} 
         className="min-h-[70vh] flex flex-col justify-center items-center relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-amber-100/30 dark:from-amber-900/20 to-transparent -z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary-900/30 to-background/30 -z-10"></div>
         
-        {/* Animated background elements */}
+        <div className="absolute inset-0 backdrop-blur-sm bg-background/30 -z-20"></div>
+        
         <motion.div 
-          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-amber-700/10 dark:bg-amber-700/5 blur-3xl"
+          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-secondary-700/10 dark:bg-secondary-700/5 blur-3xl"
           animate={{ 
             x: [0, 50, 0],
             y: [0, 30, 0], 
@@ -145,80 +159,66 @@ const Home = () => {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto"
           >
-            <div className="mb-8 flex justify-center">
-              
-            </div>
-            
             <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
-              Discover <span className="text-gradient-primary">Delicious</span> Food Near You
+              Discover <span className="text-secondary">Delicious</span> Food Near You
             </h1>
             <p className="text-lg mb-8 text-muted-foreground max-w-2xl mx-auto">
               Find top restaurants, specific dishes, and connect with local food enthusiasts in your area
             </p>
             
-            {/* Search section moved up */}
-            <div className="bg-card/70 dark:bg-card/50 rounded-3xl p-6 backdrop-blur-sm border border-amber-200/20 dark:border-amber-800/20 shadow-lg mb-8">
-              <h2 className="font-heading font-bold text-xl md:text-2xl mb-4">
-                Find Exactly What You Crave
-              </h2>
-              <div className="relative max-w-2xl mx-auto">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
+            <div className="glass-panel max-w-md mx-auto mb-8 p-4 rounded-xl">
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary h-5 w-5" />
                 <Input
                   type="text"
-                  placeholder="Search for dishes, restaurants, or cuisines..."
-                  className="pl-12 h-14 rounded-full text-lg"
+                  placeholder="Enter your location..."
+                  className="pl-10 h-12 text-base"
+                  value={locationQuery}
+                  onChange={(e) => setLocationQuery(e.target.value)}
                 />
-                <Button className="absolute right-1 top-1/2 transform -translate-y-1/2 rounded-full h-12 luxury-button">
-                  Search
-                </Button>
+                
+                {locationQuery && filteredSuggestions.length > 0 && (
+                  <div className="absolute z-10 mt-1 w-full bg-card border border-border rounded-md shadow-md">
+                    {filteredSuggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        className="w-full text-left px-4 py-2 hover:bg-secondary/10 transition-colors"
+                        onClick={() => {
+                          setLocationQuery(suggestion);
+                        }}
+                      >
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4 text-secondary" />
+                          {suggestion}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
-              
-              <div className="mt-6 flex flex-wrap gap-3 justify-center">
-                <Button variant="outline" size="sm" className="rounded-full border-amber-200/50 dark:border-amber-800/50">Pizza</Button>
-                <Button variant="outline" size="sm" className="rounded-full border-amber-200/50 dark:border-amber-800/50">Sushi</Button>
-                <Button variant="outline" size="sm" className="rounded-full border-amber-200/50 dark:border-amber-800/50">Thai</Button>
-                <Button variant="outline" size="sm" className="rounded-full border-amber-200/50 dark:border-amber-800/50">Italian</Button>
-                <Button variant="outline" size="sm" className="rounded-full border-amber-200/50 dark:border-amber-800/50">Vegetarian</Button>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="rounded-full text-lg px-8 luxury-button">
-                <Link to="/feed">Explore Food</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="rounded-full text-lg px-8 border-amber-700/30 dark:border-amber-700/50">
-                <Link to="/discover">Find Restaurants</Link>
-              </Button>
-              <Button asChild size="lg" variant="ghost" className="rounded-full text-lg px-8">
-                <Link to="/about">About Us</Link>
-              </Button>
             </div>
           </motion.div>
         </div>
         
-        {/* New Tabs for Navigation */}
-        <div className="mt-8 w-full max-w-2xl">
-          <Tabs value={activeTab} onValueChange={handleTabChange}>
-            <TabsList className="w-full">
-              <TabsTrigger value="explore" className="flex-1">Explore</TabsTrigger>
-              <TabsTrigger value="feed" className="flex-1">Feed</TabsTrigger>
-              <TabsTrigger value="restaurants" className="flex-1">Restaurants</TabsTrigger>
-              <TabsTrigger value="events" className="flex-1">Events</TabsTrigger>
-              <TabsTrigger value="groups" className="flex-1">Groups</TabsTrigger>
+        <div className="w-full max-w-2xl mx-auto glass-panel p-2 rounded-xl">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+            <TabsList className="w-full bg-secondary-50/30 dark:bg-secondary-900/30">
+              <TabsTrigger value="explore" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Explore</TabsTrigger>
+              <TabsTrigger value="feed" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Feed</TabsTrigger>
+              <TabsTrigger value="restaurants" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Restaurants</TabsTrigger>
+              <TabsTrigger value="events" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Events</TabsTrigger>
+              <TabsTrigger value="groups" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Groups</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
-        
-        {/* Existing content continues */}
       </section>
       
-      {/* Highlighted Dishes Section */}
       <section className="mt-16 mb-12">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-heading font-bold">
-            <span className="text-gradient-primary">Highlighted</span> Dishes
+            <span className="text-secondary">Highlighted</span> Dishes
           </h2>
-          <Button variant="ghost" size="sm" asChild className="text-amber-800 dark:text-amber-500">
+          <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary/80">
             <Link to="/discover" className="flex items-center gap-1">
               <span>View all</span>
               <ChevronRight className="h-4 w-4" />
@@ -232,7 +232,6 @@ const Home = () => {
         </div>
       </section>
       
-      {/* Food Blogger Carousel Section */}
       <section className="mt-16 mb-12">
         <FoodBloggerCarousel />
       </section>

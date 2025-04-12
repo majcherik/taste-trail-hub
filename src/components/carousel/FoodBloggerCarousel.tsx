@@ -106,7 +106,7 @@ export function FoodBloggerCarousel() {
     <section className="py-10">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-heading font-bold">
-          <span className="text-gradient-primary">Popular</span> Food Bloggers
+          <span className="text-secondary">Popular</span> Food Bloggers
         </h2>
       </div>
 
@@ -137,7 +137,7 @@ export function FoodBloggerCarousel() {
 
 function BloggerCard({ blogger }: { blogger: FoodBlogger }) {
   return (
-    <Card className="overflow-hidden card-hover luxury-card h-full border-gold/20 hover:border-gold/40 transition-all duration-300">
+    <Card className="overflow-hidden card-hover luxury-card h-full border-secondary/20 hover:border-secondary/40 transition-all duration-300">
       <div className="p-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Avatar>
@@ -175,7 +175,7 @@ function BloggerCard({ blogger }: { blogger: FoodBlogger }) {
       <CardContent className="p-3">
         <p className="text-sm line-clamp-2">{blogger.caption}</p>
         <div className="mt-3">
-          <Badge variant="outline" className="border-gold/30 bg-gold/5 text-gold hover:bg-gold/10">
+          <Badge variant="outline" className="border-secondary/30 bg-secondary/5 text-secondary hover:bg-secondary/10">
             <Instagram className="mr-1 h-3 w-3" />
             Follow
           </Badge>
