@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -7,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Search, ChevronRight, MapPin } from "lucide-react";
 import { FoodBloggerCarousel } from "@/components/carousel/FoodBloggerCarousel";
 import { MealCard } from "@/components/cards/MealCard";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const highlightedDishes = [
   {
@@ -122,12 +123,12 @@ const Home = () => {
         ref={heroRef} 
         className="min-h-[70vh] flex flex-col justify-center items-center relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary-900/30 to-background/30 -z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-primary-500/10 to-background/30 -z-10"></div>
         
         <div className="absolute inset-0 backdrop-blur-sm bg-background/30 -z-20"></div>
         
         <motion.div 
-          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-secondary-700/10 dark:bg-secondary-700/5 blur-3xl"
+          className="absolute top-20 left-10 w-64 h-64 rounded-full bg-warm-500/10 dark:bg-warm-500/5 blur-3xl"
           animate={{ 
             x: [0, 50, 0],
             y: [0, 30, 0], 
@@ -140,7 +141,7 @@ const Home = () => {
         />
         
         <motion.div 
-          className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-secondary/10 dark:bg-secondary/5 blur-3xl"
+          className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-warm-400/10 dark:bg-warm-400/5 blur-3xl"
           animate={{ 
             x: [0, -60, 0],
             y: [0, 40, 0], 
@@ -160,7 +161,7 @@ const Home = () => {
             className="max-w-3xl mx-auto"
           >
             <h1 className="font-heading font-bold text-4xl md:text-5xl lg:text-6xl mb-6">
-              Discover <span className="text-secondary">Delicious</span> Food Near You
+              Discover <span className="text-primary">Delicious</span> Food Near You
             </h1>
             <p className="text-lg mb-8 text-muted-foreground max-w-2xl mx-auto">
               Find top restaurants, specific dishes, and connect with local food enthusiasts in your area
@@ -168,7 +169,7 @@ const Home = () => {
             
             <div className="glass-panel max-w-md mx-auto mb-8 p-4 rounded-xl">
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary h-5 w-5" />
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-5 w-5" />
                 <Input
                   type="text"
                   placeholder="Enter your location..."
@@ -182,13 +183,13 @@ const Home = () => {
                     {filteredSuggestions.map((suggestion, index) => (
                       <button
                         key={index}
-                        className="w-full text-left px-4 py-2 hover:bg-secondary/10 transition-colors"
+                        className="w-full text-left px-4 py-2 hover:bg-warm-500/10 transition-colors"
                         onClick={() => {
                           setLocationQuery(suggestion);
                         }}
                       >
                         <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-secondary" />
+                          <MapPin className="h-4 w-4 text-primary" />
                           {suggestion}
                         </div>
                       </button>
@@ -201,24 +202,47 @@ const Home = () => {
         </div>
         
         <div className="w-full max-w-2xl mx-auto glass-panel p-2 rounded-xl">
-          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="w-full bg-secondary-50/30 dark:bg-secondary-900/30">
-              <TabsTrigger value="explore" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Explore</TabsTrigger>
-              <TabsTrigger value="feed" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Feed</TabsTrigger>
-              <TabsTrigger value="restaurants" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Restaurants</TabsTrigger>
-              <TabsTrigger value="events" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Events</TabsTrigger>
-              <TabsTrigger value="groups" className="flex-1 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground">Groups</TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className="w-full grid grid-cols-5 gap-1">
+            <TabButton 
+              active={activeTab === "explore"} 
+              onClick={() => handleTabChange("explore")}
+            >
+              Explore
+            </TabButton>
+            <TabButton 
+              active={activeTab === "feed"} 
+              onClick={() => handleTabChange("feed")}
+            >
+              Feed
+            </TabButton>
+            <TabButton 
+              active={activeTab === "restaurants"} 
+              onClick={() => handleTabChange("restaurants")}
+            >
+              Restaurants
+            </TabButton>
+            <TabButton 
+              active={activeTab === "events"} 
+              onClick={() => handleTabChange("events")}
+            >
+              Events
+            </TabButton>
+            <TabButton 
+              active={activeTab === "groups"} 
+              onClick={() => handleTabChange("groups")}
+            >
+              Groups
+            </TabButton>
+          </div>
         </div>
       </section>
       
       <section className="mt-16 mb-12">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-heading font-bold">
-            <span className="text-secondary">Highlighted</span> Dishes
+            <span className="text-primary">Highlighted</span> Dishes
           </h2>
-          <Button variant="ghost" size="sm" asChild className="text-secondary hover:text-secondary/80">
+          <Button variant="ghost" size="sm" asChild className="text-primary hover:text-primary/80">
             <Link to="/discover" className="flex items-center gap-1">
               <span>View all</span>
               <ChevronRight className="h-4 w-4" />
@@ -236,6 +260,30 @@ const Home = () => {
         <FoodBloggerCarousel />
       </section>
     </Layout>
+  );
+};
+
+// Create a new TabButton component for better hover effects
+interface TabButtonProps {
+  children: React.ReactNode;
+  active: boolean;
+  onClick: () => void;
+}
+
+const TabButton = ({ children, active, onClick }: TabButtonProps) => {
+  return (
+    <button
+      className={cn(
+        "py-2 px-3 rounded-md transition-colors relative overflow-hidden tab-button",
+        active ? "text-primary bg-warm-50/30 dark:bg-warm-900/30" : "text-foreground"
+      )}
+      onClick={onClick}
+    >
+      <span className="relative z-10">{children}</span>
+      {active && (
+        <span className="absolute bottom-0 left-0 h-0.5 w-full bg-primary" />
+      )}
+    </button>
   );
 };
 

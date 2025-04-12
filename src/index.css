@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,24 +13,24 @@
     --popover: 40 30% 99%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 215 40% 25%;
+    --primary: 32 100% 50%;
     --primary-foreground: 40 30% 97%;
 
-    --secondary: 215 60% 45%;
+    --secondary: 25 95% 53%;
     --secondary-foreground: 40 30% 97%;
 
     --muted: 40 20% 92%;
-    --muted-foreground: 215 20% 40%;
+    --muted-foreground: 25 20% 40%;
 
-    --accent: 215 30% 90%;
-    --accent-foreground: 215 25% 15%;
+    --accent: 25 100% 90%;
+    --accent-foreground: 25 80% 30%;
 
     --destructive: 0 70% 45%;
     --destructive-foreground: 40 30% 97%;
 
-    --border: 215 20% 85%;
-    --input: 215 20% 85%;
-    --ring: 215 40% 45%;
+    --border: 25 20% 85%;
+    --input: 25 20% 85%;
+    --ring: 25 50% 45%;
 
     --radius: 0.5rem;
   }
@@ -46,10 +45,10 @@
     --popover: 215 30% 15%;
     --popover-foreground: 40 20% 90%;
 
-    --primary: 215 40% 50%;
+    --primary: 32 100% 50%;
     --primary-foreground: 215 30% 12%;
 
-    --secondary: 215 60% 60%;
+    --secondary: 25 95% 53%;
     --secondary-foreground: 215 30% 12%;
 
     --muted: 215 30% 20%;
@@ -63,7 +62,7 @@
 
     --border: 215 30% 20%;
     --input: 215 30% 20%;
-    --ring: 215 40% 50%;
+    --ring: 32 100% 50%;
   }
 }
 
@@ -106,69 +105,51 @@
 
   /* Luxury design elements */
   .gold-gradient {
-    @apply bg-gradient-to-r from-secondary-700 via-secondary-600 to-secondary-700;
+    @apply bg-gradient-to-r from-warm-700 via-warm-600 to-warm-700;
   }
 
   .luxury-card {
-    @apply border border-secondary-200/20 shadow-luxury bg-gradient-to-b from-background to-secondary-50/5;
-  }
-
-  .serif-text {
-    font-family: 'Playfair Display', serif;
-    @apply tracking-wide;
-  }
-  
-  .elegant-shadow {
-    @apply shadow-[0_8px_30px_rgb(0,0,0,0.12)];
+    @apply border border-warm-200/20 shadow-luxury bg-gradient-to-b from-background to-warm-50/5;
   }
 
   /* Glass effect panels */
   .glass-panel {
-    @apply backdrop-blur-sm bg-background/90 dark:bg-background/80 border border-secondary-200/30 dark:border-secondary-800/30 shadow-lg;
+    @apply backdrop-blur-sm bg-background/90 dark:bg-background/80 border border-warm-200/30 dark:border-warm-800/30 shadow-lg;
   }
 
-  /* Animation elements */
-  .fade-in {
-    @apply animate-fade-in;
-  }
-  
-  .scale-in {
-    @apply animate-scale-in;
-  }
-  
   /* New luxury UI elements with updated colors */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-secondary-800 via-secondary-700 to-secondary-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-800 via-primary-700 to-primary-600 bg-clip-text text-transparent;
   }
   
   .gold-text {
-    @apply bg-gradient-to-r from-secondary-700 via-secondary-500 to-secondary-700 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-primary-700 via-primary-500 to-primary-700 bg-clip-text text-transparent;
   }
   
   .fancy-border {
-    @apply border-secondary-200/30 border-opacity-50;
+    @apply border-warm-200/30 border-opacity-50;
   }
   
   .luxury-button {
-    @apply bg-gradient-to-r from-secondary-800 to-secondary-700 hover:from-secondary-900 hover:to-secondary-800 text-white shadow-md;
+    @apply bg-gradient-to-r from-primary-800 to-primary-700 hover:from-primary-900 hover:to-primary-800 text-white shadow-md;
   }
   
   .fancy-divider {
-    @apply relative h-px w-full bg-gradient-to-r from-transparent via-secondary-700/30 to-transparent my-8;
+    @apply relative h-px w-full bg-gradient-to-r from-transparent via-primary-700/30 to-transparent my-8;
   }
   
   .fancy-divider:before {
     content: '';
-    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-8 bg-secondary-700/50 rounded-full;
+    @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-1 w-8 bg-primary-700/50 rounded-full;
   }
   
   .fancy-card {
-    @apply relative overflow-hidden rounded-lg border border-secondary-100/10 dark:border-secondary-900/20 bg-gradient-to-br from-white/5 to-white/10 dark:from-secondary-900/5 dark:to-secondary-900/10 backdrop-blur-sm shadow-luxury p-6;
+    @apply relative overflow-hidden rounded-lg border border-warm-100/10 dark:border-warm-900/20 bg-gradient-to-br from-white/5 to-white/10 dark:from-warm-900/5 dark:to-warm-900/10 backdrop-blur-sm shadow-luxury p-6;
   }
   
   .fancy-card:before {
     content: '';
-    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary-700 to-transparent;
+    @apply absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary-700 to-transparent;
   }
   
   /* Restaurant UI specific styles */
@@ -312,7 +293,7 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(198, 169, 106, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 140, 0, 0.5), transparent);
 }
 
 /* Badge shine effect */
@@ -346,4 +327,30 @@
   );
   transform: translateX(-100%);
   animation: shine 3s infinite;
+}
+
+/* Tab hover highlight styles */
+.tab-button {
+  @apply transition-colors duration-200 relative;
+}
+
+.tab-button:hover {
+  @apply text-primary;
+}
+
+.tab-button:after {
+  content: '';
+  @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-200;
+}
+
+.tab-button:hover:after {
+  @apply w-full;
+}
+
+.tab-button.active {
+  @apply text-primary;
+}
+
+.tab-button.active:after {
+  @apply w-full;
 }
